@@ -1,7 +1,6 @@
-> **[BAIXAR VERSÃO 4.3 PARA WINDOWS — FESTA COLORIDA](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.3_VIBE.zip)**
+> **DISTRIBUIÇÃO WINDOWS COM EXECUTÁVEL SUSPENSA.** Foi reportado bloqueio “Vírus detectado” no ZIP 4.3. Não restaure nem permita o arquivo bloqueado. Os ZIPs com o inicializador compilado foram retirados da distribuição atual enquanto o alerta é investigado. Integridade SHA-256 e testes funcionais não equivalem a uma análise antivírus.
 >
-> Extraia todo o ZIP e abra `INTERALIVES_QI_STUDIO.exe`. O runtime está incluído no ZIP.
-
+> O código-fonte permanece disponível para revisão. A causa da detecção ainda não foi determinada.
 
 # INTERALIVES QI ARENA STUDIO 4.3.0
 
