@@ -1,15 +1,25 @@
-> **[BAIXAR VERSÃO 4.2 PARA WINDOWS — ARENA NEON](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.2_NEON.zip)**
+> **[BAIXAR VERSÃO 4.3 PARA WINDOWS — FESTA COLORIDA](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.3_VIBE.zip)**
 >
 > Extraia todo o ZIP e abra `INTERALIVES_QI_STUDIO.exe`. O runtime está incluído no ZIP.
 
 
-# INTERALIVES QI ARENA STUDIO 4.2.0
+# INTERALIVES QI ARENA STUDIO 4.3.0
 
 Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes coletivos opcionais. QI é uma marca de desafio recreativo, sem avaliação clínica e sem prêmios financeiros. Participação e ranking gratuitos.
 
-[Veja a prévia em vídeo](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/docs/ARENA_4.2_PREVIA.mp4) · [Veja a captura Full HD](https://github.com/scarfacerichh-beep/tiktoklives/blob/main/docs/ARENA_4.2.png)
+[Veja a prévia em vídeo](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/docs/ARENA_4.3_PREVIA.mp4) · [Veja a captura Full HD](https://github.com/scarfacerichh-beep/tiktoklives/blob/main/docs/ARENA_4.3.png)
 
-## Novidades 4.2: cor e movimento
+## Novidades 4.3: mensagens rolando e mais cor
+
+A faixa superior agora rola automaticamente com convites para **comentar A/B/C/D, curtir, seguir e convidar alguém para jogar**. As frases mudam conforme a fase: concentração na memória, escolha da letra durante a pergunta, aviso nos últimos segundos, explicação na revelação e mensagem estática na pausa. Entre rodadas e na preparação, a faixa continua convidando o público. A marca **TESTE** fica fixa, fora do texto rolante, quando os dados são simulados.
+
+No painel, use **Paleta da arena**: Festa colorida alterna por rodada; Rosa cósmico, Oceano neon, Pôr do sol e Elétrico mantêm uma escolha fixa. O texto principal continua branco, sobre superfícies escuras.
+
+Em **Mensagens de interação rolando**, você pode desligar a faixa e manter um convite estático. A velocidade pode ser devagar, normal ou rápida. Movimento desligado e preferência do sistema por movimento reduzido também interrompem a rolagem. As mensagens não geram voz adicional nem inventam espectadores, votos ou presentes recebidos.
+
+Na atualização, foi corrigido um caso de curtidas/seguidores recebidos na troca de rodada: esses eventos sociais não ficam presos à rodada anterior. Votos e poderes continuam com a proteção contra eventos atrasados.
+
+## Visual neon e animações
 
 A estrutura vertical foi preservada, com uma nova camada visual: cores mais vivas por alternativa, tema por categoria, faixas de luz no fundo, chamada para comentar, cronômetro circular, entrada de perguntas, reação aos votos, troca animada de posições e celebração na revelação. O baú conquistado ganhou uma ilustração própria, sem cobrir a pergunta.
 
@@ -44,7 +54,7 @@ A narração de rodadas e revelações pode ser desligada separadamente. Com cha
 4. Clique **Abrir tela da LIVE**: `http://127.0.0.1:8788/?live=1`.
 5. Deixe a janela do servidor e um painel abertos durante a transmissão. Fechar o painel interrompe a entrada TikFinity; o motor continua no servidor.
 
-Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.2.md` antes da primeira transmissão.
+Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.3.md` antes da primeira transmissão.
 
 Se a porta estiver ocupada, o programa explica o erro e mantém a janela aberta. Feche a instância anterior ou execute `INTERALIVES_QI_STUDIO.exe 8789`. Também aceita a variável de ambiente `INTERALIVES_PORT`. Não use duas instâncias na mesma pasta: compartilham o arquivo de sessão.
 
@@ -120,6 +130,8 @@ CHROMIUM=/usr/bin/chromium npm run test:e2e
 CHROMIUM=/usr/bin/chromium node tests/media-and-phases.cjs
 CHROMIUM=/usr/bin/chromium npm run test:engagement
 CHROMIUM=/usr/bin/chromium npm run test:motion
+CHROMIUM=/usr/bin/chromium npm run test:ticker
+npm run test:prompts
 ```
 
 No Windows PowerShell: `$env:CHROMIUM='C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'`, `$env:PYTHON="$PWD\runtime\python.exe"`, depois `npm run test:e2e`. Ajuste o caminho conforme a instalação. No Linux o teste usa `/usr/bin/chromium` por padrão. O teste de mídia usa o clipe sintético incluído em `evidence/test-video.mp4`.

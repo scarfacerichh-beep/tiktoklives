@@ -12,6 +12,8 @@ class TestInteractions(unittest.TestCase):
     def event(self,t='chat',uid='u1',name='João 🧠',**data):
         self.e.command('event',{'event':t,'data':dict(userId=uid,nickname=name,**data)})
     def voices(self,kind):return [e for e in self.e.interactions.events if e['kind']==kind]
+    def test_social_event_is_not_discarded_at_round_boundary(self):
+        old=self.e.round;self.e.start();self.e.command('event',{'event':'like','round':old,'data':{'userId':'social','nickname':'Lúcia','likeCount':1}});self.assertIn('Lúcia',self.voices('like')[0]['text'])
     def test_single_like_says_name_and_thanks(self):
         self.event('like',likeCount=1);self.assertIn('João',self.voices('like')[0]['text']);self.assertIn('obrigado',self.voices('like')[0]['text']);self.assertIn('João',self.e.alerts[0]['text'])
     def test_like_cooldown_and_follow_separate(self):

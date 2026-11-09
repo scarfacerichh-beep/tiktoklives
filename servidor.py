@@ -106,7 +106,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');args=parser.parse_args()
     try:server=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
     except OSError as e:print(f'Não foi possível iniciar na porta {args.port}: {e}. Feche outra instância ou use --port 8789.');return 1
-    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{args.port}/';print('INTERALIVES QI ARENA STUDIO 4.2\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
+    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{args.port}/';print('INTERALIVES QI ARENA STUDIO 4.3\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
     if args.open:webbrowser.open(url)
     try:server.serve_forever()
     except KeyboardInterrupt:server.server_close()

@@ -11,7 +11,7 @@ async function poll(fn,timeout=7000){let start=Date.now();while(Date.now()-start
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM||'/usr/bin/chromium',args:['--no-sandbox']});const errors=[];
  const panel=await browser.newPage({viewport:{width:1536,height:1120}});panel.on('pageerror',e=>errors.push(e.message));await panel.goto(base);
  await post('reset');await post('settings',{auto:false,duration:90,roseId:'5655',hintId:'1',specialId:'999'});await panel.selectOption('#source','mock');
- await poll(async()=>(await state()).connection.includes('socket aberto'));
+ await poll(async()=>{const r=await fetch('http://localhost:21214/emit',{method:'POST',body:JSON.stringify({event:'diagnostic',data:{}})});return (await r.json()).clients>0&&(await state()).connection.includes('socket aberto');},16000);
  await panel.click('#start');await poll(async()=>(await state()).state==='running');let s=await state();if(s.phase==='memorize'){await new Promise(r=>setTimeout(r,5200));s=await state();}
  const correct='ABCD'[bank.find(q=>q.id===s.q.id).key];
  for(let i=1;i<=3;i++)await emit('chat',{userId:'u'+i,nickname:i<3?'Ana 🧠':'<img src=x onerror=alert(1)>',comment:correct,msgId:'m'+i});

@@ -1,3 +1,13 @@
+# 4.3.0 — 09/11/2026
+
+- Faixa superior de mensagens com rolagem contínua: comentar, curtir, seguir e convidar amigos.
+- Textos adequados para espera, pergunta, memória, urgência, revelação e pausa.
+- Marca de simulação fixa; snapshots e votos não reiniciam a faixa.
+- Quatro paletas mais coloridas, com modo Festa que varia por rodada.
+- Velocidade configurável, opção estática e respeito a movimento reduzido.
+- Corrigida a recepção de eventos sociais entre rodadas, preservando proteção de votos e poderes atrasados.
+- Testes de texto, persistência, rolagem real, fases, clones limitados, três resoluções e regressões do jogo.
+
 # 4.2.0 — 09/11/2026
 
 - Nova paleta neon, com alternativas violetas, ciano, rosa e douradas, e acentos por categoria.
