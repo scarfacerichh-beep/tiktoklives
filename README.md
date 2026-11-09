@@ -1,13 +1,25 @@
-> **[BAIXAR VERSÃO 4.1 PARA WINDOWS — VOZ E BAÚS VISUAIS](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.1_VOZ.zip)**
+> **[BAIXAR VERSÃO 4.2 PARA WINDOWS — ARENA NEON](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.2_NEON.zip)**
 >
 > Extraia todo o ZIP e abra `INTERALIVES_QI_STUDIO.exe`. O runtime está incluído no ZIP.
 
 
-# INTERALIVES QI ARENA STUDIO 4.1.0
+# INTERALIVES QI ARENA STUDIO 4.2.0
 
 Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes coletivos opcionais. QI é uma marca de desafio recreativo, sem avaliação clínica e sem prêmios financeiros. Participação e ranking gratuitos.
 
-## Novidades 4.1: voz por nome e baús visuais
+[Veja a prévia em vídeo](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/docs/ARENA_4.2_PREVIA.mp4) · [Veja a captura Full HD](https://github.com/scarfacerichh-beep/tiktoklives/blob/main/docs/ARENA_4.2.png)
+
+## Novidades 4.2: cor e movimento
+
+A estrutura vertical foi preservada, com uma nova camada visual: cores mais vivas por alternativa, tema por categoria, faixas de luz no fundo, chamada para comentar, cronômetro circular, entrada de perguntas, reação aos votos, troca animada de posições e celebração na revelação. O baú conquistado ganhou uma ilustração própria, sem cobrir a pergunta.
+
+No painel, escolha **Animações da arena → Vibrantes, Suaves ou Desligadas**. A preferência do sistema por movimento reduzido tem prioridade. **Em pausa, o movimento ambiente para também.** Para experimentar, inicie rodadas e use os botões de respostas/presentes; os efeitos acompanham eventos recebidos, sem fabricar votos ou espectadores.
+
+A animação de votos tem limite de frequência; partículas têm teto de 30 elementos e são removidas após 2 segundos. Atualizações repetidas de sincronização não reiniciam a animação de uma resposta. Os IDs das contas mantêm a identidade no movimento do ranking, mesmo com apelidos iguais.
+
+O fundo usa gradientes e transformações, sem grandes desfoques em movimento. Uma amostra de 90 frames no Chromium Linux, em 1080 × 1920 e sem gravador, ficou perto de 60 FPS após otimização; isso não garante a mesma taxa no Windows/OBS. Em PCs mais fracos, use o modo suave ou desligado e configure a captura em 30 FPS.
+
+## Voz por nome e baús visuais
 
 1. No Windows, abra o painel no **Microsoft Edge** e deixe-o aberto. Nas configurações de fala do Windows, instale uma voz local em **Português (Brasil)** caso ainda não exista.
 2. Em **VOZ DA ARENA**, escolha a voz, volume e velocidade. Clique **Ativar e testar voz** e confirme que ouviu a frase de teste. É preciso clicar novamente depois de recarregar o painel.
@@ -32,7 +44,7 @@ A narração de rodadas e revelações pode ser desligada separadamente. Com cha
 4. Clique **Abrir tela da LIVE**: `http://127.0.0.1:8788/?live=1`.
 5. Deixe a janela do servidor e um painel abertos durante a transmissão. Fechar o painel interrompe a entrada TikFinity; o motor continua no servidor.
 
-Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.1.md` antes da primeira transmissão.
+Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.2.md` antes da primeira transmissão.
 
 Se a porta estiver ocupada, o programa explica o erro e mantém a janela aberta. Feche a instância anterior ou execute `INTERALIVES_QI_STUDIO.exe 8789`. Também aceita a variável de ambiente `INTERALIVES_PORT`. Não use duas instâncias na mesma pasta: compartilham o arquivo de sessão.
 
@@ -99,12 +111,15 @@ Testes de navegador (Node.js 20+ e Playwright, apenas para desenvolvimento):
 ```sh
 npm ci
 npx playwright install chromium
+npx playwright install ffmpeg
 python3 servidor.py --port 8790
 # em outro terminal
 python3 mock_tikfinity.py
 # em outro terminal: indique o executável do navegador local
 CHROMIUM=/usr/bin/chromium npm run test:e2e
 CHROMIUM=/usr/bin/chromium node tests/media-and-phases.cjs
+CHROMIUM=/usr/bin/chromium npm run test:engagement
+CHROMIUM=/usr/bin/chromium npm run test:motion
 ```
 
 No Windows PowerShell: `$env:CHROMIUM='C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'`, `$env:PYTHON="$PWD\runtime\python.exe"`, depois `npm run test:e2e`. Ajuste o caminho conforme a instalação. No Linux o teste usa `/usr/bin/chromium` por padrão. O teste de mídia usa o clipe sintético incluído em `evidence/test-video.mp4`.

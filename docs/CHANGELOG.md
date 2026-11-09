@@ -1,3 +1,14 @@
+# 4.2.0 — 09/11/2026
+
+- Nova paleta neon, com alternativas violetas, ciano, rosa e douradas, e acentos por categoria.
+- Fundo com faixas lentas, sem grandes filtros de desfoque animados.
+- Entrada de perguntas e alternativas, reação a votos reais, troca de posições no ranking e revelação da resposta correta.
+- Cronômetro circular, reação discreta nos últimos 5 segundos e CTA com passagem de luz.
+- Baú cosmético ilustrado e confetes limitados, no espaço inferior do visor.
+- Controle de movimento vibrante/suave/desligado, pausa e preferência de movimento reduzido.
+- Identidade estável por conta nas animações do ranking, incluindo apelidos iguais.
+- Testes de movimento, três resoluções, gravação real da aplicação e medição local de desempenho.
+
 # 4.1.0 — 09/11/2026
 
 - Primeira curtida gera agradecimento por nome, sem esperar 100 curtidas.

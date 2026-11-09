@@ -1,6 +1,6 @@
 // O spy de voz valida texto/roteamento. Não comprova áudio nativo do Windows.
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
-const base=process.env.ARENA_URL||'http://127.0.0.1:8794',out=process.env.EVIDENCE_DIR||path.join(__dirname,'../evidence');
+const base=process.env.ARENA_URL||'http://127.0.0.1:8790',out=process.env.EVIDENCE_DIR||path.join(__dirname,'../evidence');
 const bank=JSON.parse(cp.execFileSync(process.env.PYTHON||'python3',['-c','import json;from questions import BANK;print(json.dumps(BANK))'],{cwd:path.join(__dirname,'..')}));
 async function cmd(action,data={}){return(await fetch(base+'/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,data})})).json();}
 async function state(){return(await fetch(base+'/api/state')).json();}

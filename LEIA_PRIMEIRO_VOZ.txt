@@ -1,7 +1,7 @@
-INTERALIVES QI ARENA 4.1 — VOZ E BAÚS VISUAIS
+INTERALIVES QI ARENA 4.2 — VOZ E BAÚS VISUAIS
 
 1. FECHE a versão antiga, inclusive a janela do servidor.
-2. EXTRAIA TODO o ZIP 4.1 em uma pasta nova.
+2. EXTRAIA TODO o ZIP 4.2 em uma pasta nova.
 3. Abra INTERALIVES_QI_STUDIO.exe.
 4. Abra o painel no Microsoft Edge.
 5. Em VOZ DA ARENA, escolha uma voz LOCAL em português.
@@ -29,4 +29,8 @@ mas não é possível recuperar quantos acertos geraram esses pontos.
 
 Testes de voz automatizados usam API simulada. Áudio audível e captura
 na sua instalação Windows/OBS precisam de teste antes da LIVE.
-Consulte README.md e docs/RELATORIO_4.1.md.
+Consulte README.md e docs/RELATORIO_4.2.md.
+
+VISUAL NEON: escolha Vibrantes, Suaves ou Desligadas no painel.
+Para ver os efeitos, inicie as rodadas: a pausa também congela o movimento.
+A preferência de movimento reduzido do Windows é respeitada.

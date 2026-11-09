@@ -10,7 +10,7 @@ def clean(value,limit=48):
 class Engine:
     def __init__(self,clock=time.monotonic,storage=None):
         self.clock=clock;self.lock=threading.RLock();self.storage=Path(storage) if storage else None
-        self.settings=dict(duration=20,interval=6,auto=True,level=1,persist=False,moderation=False,blocked='',roseId='',hintId='',specialId='',videoURL='',videoMuted=True,videoWhen='both',voiceEnabled=True,voiceNarration=True,voiceRate=1.05,voiceVolume=0.8,rewardsEnabled=True)
+        self.settings=dict(duration=20,interval=6,auto=True,level=1,persist=False,moderation=False,blocked='',roseId='',hintId='',specialId='',videoURL='',videoMuted=True,videoWhen='both',voiceEnabled=True,voiceNarration=True,voiceRate=1.05,voiceVolume=0.8,rewardsEnabled=True,visualMotion='vivid')
         self.state='idle';self.phase='answer';self.round=0;self.index=0;self.q=None;self.deadline=0;self.remaining=0;self.extra=0;self.hint=False;self.votes={};self.counts=[0,0,0,0];self.scores={};self.seen=OrderedDict();self.cooldowns=OrderedDict();self.logs=deque(maxlen=60);self.alerts=deque(maxlen=12);self.alert=None;self.alert_until=0;self.revision=0;self.mode='REAL · AGUARDANDO EVENTOS';self.connection='desconectado';self.last_event=0;self.likes=0;self.frozen=None
         self.interactions=Interactions(clock);self.round_names={};self.pending_rewards=deque(maxlen=32);self.rewards=deque(maxlen=8);self.reward_sequence=0
         defaults=self.settings.copy()
@@ -27,6 +27,7 @@ class Engine:
                     elif k in ('voiceRate','voiceVolume'):
                         self.settings[k]=max(0.7,min(1.4,float(v))) if k=='voiceRate' else max(0,min(1,float(v)))
                     else:self.settings[k]=clean(v,2000 if k=='blocked' else 120)
+                if self.settings['visualMotion'] not in ('vivid','soft','off'):self.settings['visualMotion']='vivid'
                 if self.settings['videoURL'] and not self.settings['videoURL'].startswith('/media/presenter.mp4?'):self.settings['videoURL']=''
                 self.scores={clean(k,96):dict(name=clean(v['name']),points=max(0,min(int(v['points']),10**12)),hits=max(0,min(int(v.get('hits',0)),10**9)),streak=0,lastRound=None,rewards=max(0,min(int(v.get('rewards',0)),max(0,int(v.get('hits',0)))//5)),cosmetic=v.get('cosmetic','') if v.get('cosmetic') in ('neon','star','badge','confetti') else '') for k,v in list(saved.get('scores',{}).items())[:10000]} if self.settings['persist'] else {}
             except (ValueError,TypeError,KeyError,OSError,AttributeError):self.settings=defaults;self.scores={};self.log('Arquivo salvo inválido; sessão nova.')
@@ -44,7 +45,7 @@ class Engine:
             self.alerts.appendleft(alert)
         elif len(self.alerts)<12:self.alerts.append(alert)
     def ranked(self):
-        return sorted(self.scores.values(), key=lambda r: (-r.get('hits',0),-r['points'],r['name']))[:10]
+        return [{**row,'playerId':uid} for uid,row in sorted(self.scores.items(),key=lambda item:(-item[1].get('hits',0),-item[1]['points'],item[1]['name']))[:10]]
     def speak(self,kind,text,**options):
         if self.settings['voiceEnabled'] and (self.settings['voiceNarration'] or kind not in ('round','reveal')):
             return self.interactions.emit(kind,text,**options)
@@ -105,10 +106,11 @@ class Engine:
                 if k in data:self.settings[k]=data[k] is True
             for k in ('voiceRate','voiceVolume'):
                 if k in data:self.settings[k]=max(0.7,min(1.4,float(data[k]))) if k=='voiceRate' else max(0,min(1,float(data[k])))
-            for k in ('roseId','hintId','specialId','blocked','videoURL','videoWhen'):
+            for k in ('roseId','hintId','specialId','blocked','videoURL','videoWhen','visualMotion'):
                 if k in data:self.settings[k]=clean(data[k],2000 if k=='blocked' else 120 if k=='videoURL' else 30)
             if self.settings['videoURL'] and not self.settings['videoURL'].startswith('/media/presenter.mp4?'):self.settings['videoURL']=''
             if self.settings['videoWhen'] not in ('both','idle','interval'):self.settings['videoWhen']='both'
+            if self.settings['visualMotion'] not in ('vivid','soft','off'):self.settings['visualMotion']='vivid'
             self.save()
         elif action=='status':self.connection=clean(data.get('status'),140);self.mode=clean(data.get('mode'),60)
         elif action=='event':self.event(data)
