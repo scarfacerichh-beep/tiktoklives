@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-runtime\python.exe mock_tikfinity.py
+call RODAR_PYTHON.bat mock_tikfinity.py
 pause

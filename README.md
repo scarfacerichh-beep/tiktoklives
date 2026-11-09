@@ -2,7 +2,9 @@
 >
 > O código-fonte permanece disponível para revisão. A causa da detecção ainda não foi determinada.
 
-# INTERALIVES QI ARENA STUDIO 4.3.0
+[Edição em código-fonte, sem binários Windows compilados](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_4.3.1_CODIGO.zip) — requer Python instalado separadamente. Não houve certificação antivírus dessa edição neste ambiente.
+
+# INTERALIVES QI ARENA STUDIO 4.3.1
 
 Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes coletivos opcionais. QI é uma marca de desafio recreativo, sem avaliação clínica e sem prêmios financeiros. Participação e ranking gratuitos.
 
@@ -45,19 +47,21 @@ A narração de rodadas e revelações pode ser desligada separadamente. Com cha
 
 **Baús misteriosos visuais:** a cada 5 acertos acumulados na sessão, a pessoa recebe uma conquista gratuita — aura neon, estrela, selo ou confetes. O baú é anunciado ao revelar a resposta. O nome da conquista aparece no aviso; participantes no Top 3 também ganham o tratamento visual correspondente no cartão. Não há presentes TikTok enviados, dinheiro, prêmio físico ou valor real. A opção pode ser desligada. Sob grande volume, as filas de anúncios têm limite, mas o contador de conquistas permanece no ranking. Com a persistência ativa, acertos e conquistas recebidas são guardados.
 
-## Windows: extrair e abrir
+## Windows: edição em código-fonte 4.3.1
 
-1. Extraia **todo** o ZIP para uma pasta gravável, como Documentos\INTERALIVES.
-2. Abra `INTERALIVES_QI_STUDIO.exe` ou `INICIAR_INTERALIVES_QI.bat`.
-3. O painel abre no navegador: `http://127.0.0.1:8788/`.
-4. Clique **Abrir tela da LIVE**: `http://127.0.0.1:8788/?live=1`.
-5. Deixe a janela do servidor e um painel abertos durante a transmissão. Fechar o painel interrompe a entrada TikFinity; o motor continua no servidor.
+Os pacotes com inicializador `.exe` estão suspensos após um alerta de antivírus. A causa não foi determinada. Consulte [o aviso de distribuição](docs/AVISO_DISTRIBUICAO.md). Não restaure o arquivo bloqueado nem desative proteções.
 
-Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.3.md` antes da primeira transmissão.
+Esta edição não contém binários Windows compilados ou runtime embutido. Os scripts `.bat` são texto legível. É necessário instalar **Python 3.11 ou superior separadamente**, pelo [site oficial](https://www.python.org/downloads/windows/).
 
-Se a porta estiver ocupada, o programa explica o erro e mantém a janela aberta. Feche a instância anterior ou execute `INTERALIVES_QI_STUDIO.exe 8789`. Também aceita a variável de ambiente `INTERALIVES_PORT`. Não use duas instâncias na mesma pasta: compartilham o arquivo de sessão.
+1. Instale o Python oficial, caso ainda não tenha.
+2. Extraia o pacote de código em uma **pasta nova**, sem o executável antigo.
+3. Abra `INICIAR_INTERALIVES_QI.bat`. Ele usa o Python instalado e não executa arquivos do pacote antigo.
+4. Alternativa: abra o terminal nessa pasta e execute `py -3 servidor.py --open`.
+5. Painel: `http://127.0.0.1:8788/`; visor: `http://127.0.0.1:8788/?live=1`.
 
-No Linux/macOS: `python3 servidor.py --open` (Python 3.11+), sem dependências de produção. Porta alternativa: `python3 servidor.py --port 8789`.
+Nenhum pip é necessário para jogar. Porta alternativa: `INICIAR_INTERALIVES_QI.bat --port 8789`. No Linux/macOS: `python3 servidor.py --open`.
+
+Essa edição não teve certificação antivírus aqui. Se o antivírus alertar novamente, mantenha o bloqueio e informe o nome da detecção. O funcionamento do `.bat` e do Python instalado precisam ser conferidos no Windows do usuário.
 
 ## Fluxo do operador
 
@@ -133,7 +137,7 @@ CHROMIUM=/usr/bin/chromium npm run test:ticker
 npm run test:prompts
 ```
 
-No Windows PowerShell: `$env:CHROMIUM='C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'`, `$env:PYTHON="$PWD\runtime\python.exe"`, depois `npm run test:e2e`. Ajuste o caminho conforme a instalação. No Linux o teste usa `/usr/bin/chromium` por padrão. O teste de mídia usa o clipe sintético incluído em `evidence/test-video.mp4`.
+No Windows PowerShell: `$env:CHROMIUM='C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'`, `$env:PYTHON="python"`, depois `npm run test:e2e`. Ajuste o caminho conforme a instalação. No Linux o teste usa `/usr/bin/chromium` por padrão. O teste de mídia usa o clipe sintético incluído em `evidence/test-video.mp4`.
 
 Evidências em `evidence/`. A homologação em Windows, OBS/TikTok Studio e LIVE real continua necessária; não foi substituída por simulação.
 
@@ -141,4 +145,4 @@ Evidências em `evidence/`. A homologação em Windows, OBS/TikTok Studio e LIVE
 
 `engine.py`: estados, relógio, votos e persistência. `questions.py`: 122 questões em cinco categorias. `servidor.py`: HTTP/SSE e inicialização. `static/app.js`: apresentação e painel. `static/tikfinity.js`: adaptador WebSocket. `mock_tikfinity.py`: simulador. `launcher.c`: inicializador Windows.
 
-Python oficial embutido: licença em `runtime/LICENSE.txt`. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP e está publicado em https://github.com/scarfacerichh-beep/tiktoklives . O ZIP da pasta downloads inclui o runtime Windows.
+Python oficial embutido: licença no pacote original de runtime, retirado da distribuição atual. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP e está publicado em https://github.com/scarfacerichh-beep/tiktoklives . O ZIP da pasta downloads inclui o runtime Windows.

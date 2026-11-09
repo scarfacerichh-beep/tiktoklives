@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-runtime\python.exe -m unittest discover -s tests -v
+call RODAR_PYTHON.bat -m unittest discover -s tests -v
 pause

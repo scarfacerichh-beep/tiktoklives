@@ -1,40 +1,24 @@
-INTERALIVES QI ARENA 4.3 — VOZ E BAÚS VISUAIS
+INTERALIVES QI ARENA 4.3.1 — EDICAO EM CODIGO-FONTE
 
-1. FECHE a versão antiga, inclusive a janela do servidor.
-2. EXTRAIA TODO o ZIP 4.3 em uma pasta nova.
-3. Abra INTERALIVES_QI_STUDIO.exe.
-4. Abra o painel no Microsoft Edge.
-5. Em VOZ DA ARENA, escolha uma voz LOCAL em português.
-6. Clique ATIVAR E TESTAR VOZ. Confirme que ouviu o teste.
-7. No OBS/TikTok Studio, capture o ÁUDIO DO NAVEGADOR DO PAINEL
-   ou do sistema. O visor de transmissão NÃO é a fonte da voz.
-8. Teste uma curtida, seguir e responder D com seu nome no painel.
-9. Depois selecione TikFinity REAL e confira eventos da sua LIVE.
+O pacote anterior com executavel foi bloqueado pelo antivirus e retirado
+da distribuicao atual. A causa da deteccao continua em investigacao.
+NAO restaure o arquivo bloqueado nem desative o antivirus.
 
-SE NÃO HOUVER VOZ:
-Instale uma voz Português (Brasil) nas configurações de fala do Windows,
-reabra o Edge e teste novamente. Não existe API paga ou voz em nuvem.
+Esta edicao NAO inclui o executavel compilado ou o runtime embutido.
+Os arquivos BAT sao scripts de texto e usam o Python instalado por voce.
+Nao e uma declaracao de liberacao por antivirus: nao houve scan Defender
+aqui. Caso surja outro alerta, mantenha o bloqueio e informe a ameaca.
 
-O RANKING usa ACERTOS primeiro e pontos como desempate.
-A cada 5 acertos, um BAÚ VISUAL libera aura, estrela, selo ou confetes.
-São efeitos cosméticos, sem valor real e sem envio de presentes TikTok.
+1. Instale Python 3.11 ou superior pelo site OFICIAL:
+   https://www.python.org/downloads/windows/
+2. Extraia o ZIP em uma PASTA NOVA. Nao misture com os pacotes antigos.
+3. Abra INICIAR_INTERALIVES_QI.bat. Ele nao executa o inicializador antigo.
+   Alternativa pelo terminal: py -3 servidor.py --open
+4. O painel abre em http://127.0.0.1:8788/
+5. No Edge, escolha a voz pt-BR e clique Ativar e testar voz se desejar.
+6. No OBS/Studio, capture o audio do painel ou do sistema.
+7. Escolha paleta, faixa de mensagens e velocidade no painel.
 
-Com muitas interações, a voz limita falas para não atropelar o jogo.
-Recomendamos 10 segundos no intervalo de revelação.
-Após recarregar o painel, clique novamente em Ativar e testar voz.
-
-Para manter o ranking anterior, copie session.json da pasta antiga,
-com ambos os servidores fechados. Pontos antigos são preservados,
-mas não é possível recuperar quantos acertos geraram esses pontos.
-
-Testes de voz automatizados usam API simulada. Áudio audível e captura
-na sua instalação Windows/OBS precisam de teste antes da LIVE.
-Consulte README.md e docs/RELATORIO_4.3.md.
-
-VISUAL NEON: escolha Vibrantes, Suaves ou Desligadas no painel.
-Para ver os efeitos, inicie as rodadas: a pausa também congela o movimento.
-A preferência de movimento reduzido do Windows é respeitada.
-
-NOVIDADE 4.3: mensagens de interação rolando no topo.
-Escolha a paleta e a velocidade no painel. Festa colorida varia por rodada.
-Na pausa, a faixa para. Movimento reduzido mantém uma frase estática.
+Requisitos: Python instalado separadamente; nenhum pip e necessario
+para o jogo. O Windows e o antivirus continuam com suas protecoes ativas.
+Veja docs/AVISO_DISTRIBUICAO.md para a investigacao e suas limitacoes.

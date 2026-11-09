@@ -1,3 +1,10 @@
+# 4.3.1 — distribuição em código-fonte
+
+- Suspensos os ZIPs com inicializador compilado após bloqueio por antivírus reportado pelo usuário; causa ainda não determinada.
+- Edição sem executável nativo/runtime embutido, usando Python instalado pelo site oficial.
+- Scripts de inicialização legíveis que recusam misturar a edição com o executável antigo.
+- Aviso de distribuição distingue testes funcionais de validação antivírus.
+
 # 4.3.0 — 09/11/2026
 
 - Faixa superior de mensagens com rolagem contínua: comentar, curtir, seguir e convidar amigos.
