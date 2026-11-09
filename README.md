@@ -1,11 +1,28 @@
-> **[BAIXAR JOGO COMPLETO PARA WINDOWS — ZIP (18 MB)](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_FINAL.zip)**
+> **[BAIXAR VERSÃO 4.1 PARA WINDOWS — VOZ E BAÚS VISUAIS](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_4.1_VOZ.zip)**
 >
 > Extraia todo o ZIP e abra `INTERALIVES_QI_STUDIO.exe`. O runtime está incluído no ZIP.
 
 
-# INTERALIVES QI ARENA STUDIO 4.0.0
+# INTERALIVES QI ARENA STUDIO 4.1.0
 
 Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes coletivos opcionais. QI é uma marca de desafio recreativo, sem avaliação clínica e sem prêmios financeiros. Participação e ranking gratuitos.
+
+## Novidades 4.1: voz por nome e baús visuais
+
+1. No Windows, abra o painel no **Microsoft Edge** e deixe-o aberto. Nas configurações de fala do Windows, instale uma voz local em **Português (Brasil)** caso ainda não exista.
+2. Em **VOZ DA ARENA**, escolha a voz, volume e velocidade. Clique **Ativar e testar voz** e confirme que ouviu a frase de teste. É preciso clicar novamente depois de recarregar o painel.
+3. No OBS ou TikTok Studio, inclua o **áudio do navegador do painel** ou a captura do áudio do sistema. A voz não sai automaticamente da fonte de navegador do visor. Evite capturar o mesmo áudio por duas fontes.
+4. Selecione TikFinity real e teste uma curtida, seguir e responder D. As falas agradecem por nome e confirmam a letra sem informar se está certa antes da revelação. Comentários livres recebem boas-vindas, sem ler o texto do espectador em voz alta.
+
+**Somente vozes locais em português são usadas.** Se não houver voz compatível, o painel informa o impedimento. O teste automatizado usa uma API de fala simulada; reprodução audível da voz instalada no seu Windows e captura no OBS/Studio ainda precisam ser verificadas no seu PC. Não há voz natural de IA em nuvem, chave, assinatura ou áudio humano pré-gravado.
+
+A fila aceita até quatro falas aguardando. Falas têm validade de 12 segundos; confirmações de votação vencem ao mudar de rodada. Curtidas e seguidores têm cooldown; em avalanche, parte das falas é descartada para não atrasar o jogo. As contagens e os acertos continuam sendo processados. Uma concessão no servidor impede dois painéis de narrarem ao mesmo tempo, renovada antes de cada fala; feche/silencie o painel anterior ou aguarde até 25 segundos após uma interrupção. Reconexão do servidor pede reativação manual da voz.
+
+A narração de rodadas e revelações pode ser desligada separadamente. Com chat parado, há um único convite falado na rodada, desde que ainda exista tempo. Para escutar as revelações com calma, recomendamos intervalo de **10 segundos**.
+
+**Ranking por acertos:** mostra acertos e pontos no visor e no Top 10. Pontos antigos da versão 4.0 são mantidos quando a persistência está ligada, mas seus acertos antigos não podem ser reconstruídos: a contagem deles começa em zero nesta versão. Nenhuma vitória passada é inventada. Para uma competição nova, use Reiniciar sessão.
+
+**Baús misteriosos visuais:** a cada 5 acertos acumulados na sessão, a pessoa recebe uma conquista gratuita — aura neon, estrela, selo ou confetes. O baú é anunciado ao revelar a resposta. O nome da conquista aparece no aviso; participantes no Top 3 também ganham o tratamento visual correspondente no cartão. Não há presentes TikTok enviados, dinheiro, prêmio físico ou valor real. A opção pode ser desligada. Sob grande volume, as filas de anúncios têm limite, mas o contador de conquistas permanece no ranking. Com a persistência ativa, acertos e conquistas recebidas são guardados.
 
 ## Windows: extrair e abrir
 
@@ -15,7 +32,7 @@ Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes co
 4. Clique **Abrir tela da LIVE**: `http://127.0.0.1:8788/?live=1`.
 5. Deixe a janela do servidor e um painel abertos durante a transmissão. Fechar o painel interrompe a entrada TikFinity; o motor continua no servidor.
 
-Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_FINAL.md` antes da primeira transmissão.
+Inclui Python 3.12.10 portátil oficial, para **Windows 10/11 x64**, sem instalação, pip ou chaves de API. O executável é um inicializador nativo de 64 bits: não mova o EXE sozinho. Não foi assinado digitalmente. O pacote foi compilado e inspecionado em Linux; execução nativa no Windows ainda precisa de homologação. Consulte `docs/RELATORIO_4.1.md` antes da primeira transmissão.
 
 Se a porta estiver ocupada, o programa explica o erro e mantém a janela aberta. Feche a instância anterior ou execute `INTERALIVES_QI_STUDIO.exe 8789`. Também aceita a variável de ambiente `INTERALIVES_PORT`. Não use duas instâncias na mesma pasta: compartilham o arquivo de sessão.
 
@@ -29,7 +46,7 @@ No Linux/macOS: `python3 servidor.py --open` (Python 3.11+), sem dependências d
 - Automático desligado: após a explicação, aguarda a próxima rodada manual.
 - Nível inicial filtra perguntas fáceis; as questões avançam em dificuldade até o fim do ciclo. Sem repetição de ID antes de esgotar o banco elegível. Alterar nível durante uma sessão reinicia a composição do ciclo; para um ciclo completo, mantenha o nível escolhido.
 - Uma primeira resposta válida por ID em cada rodada. `A`, `b`, `C!`, `D.` são aceitos. Mensagens longas e respostas múltiplas são descartadas.
-- Cada acerto vale 100 a 150 pontos. O bônus usa o tempo original restante: presentes não ampliam o bônus. Erros não descontam pontos.
+- O ranking ordena primeiro pelo número de acertos, depois pelos pontos de rapidez; nome é desempate final. Cada acerto vale 100 a 150 pontos. O bônus usa o tempo original restante: presentes não ampliam o bônus. Erros não descontam pontos.
 - Contas diferentes com apelidos iguais continuam separadas. Top 3 no visor e Top 10 no painel. Nomes longos recebem reticências.
 - Ranking é da sessão por padrão. Marque **Manter ranking** para guardar em `session.json`. Configurações são salvas nesse arquivo; a escrita usa substituição atômica. Rodada ativa não é restaurada após reiniciar o servidor.
 - **Pausar recebimento de respostas** bloqueia votos, mantendo o relógio. IDs separados por vírgula bloqueiam participantes específicos.
@@ -52,13 +69,13 @@ Configure os IDs numéricos vistos no log. **Não há correspondência por nome 
 - Combo de `giftType=1`: apenas a mensagem final com `repeatEnd=true`. Uma aplicação por combo, independentemente da quantidade. Deduplicação por grupo/combo ou mensagem/transação. Eventos sem identificador têm cooldown de 2 segundos por usuário/presente; nesse caso, eventos legítimos próximos podem ser agrupados. Confira o formato real da sua versão do Desktop.
 - Fila visual: até 12 agradecimentos, 2,8 segundos por mensagem. Excesso visual é descartado; pontuação e poderes são processados independentemente dessa fila.
 
-Limites: 20.000 votos por rodada, 10.000 contas no ranking, 4.096 IDs recentes/cooldowns e 60 linhas de log. O adaptador usa fila limitada e lotes; eventos atrasados de outra rodada são descartados. Para manter os alertas discretos, siga/compartilhe/curta têm cooldown por conta; a cada 100 curtidas elegíveis surge um agradecimento.
+Limites: 20.000 votos por rodada, 10.000 contas no ranking, 4.096 IDs recentes/cooldowns e 60 linhas de log. O adaptador usa fila limitada e lotes; eventos atrasados de outra rodada são descartados. Para manter os alertas discretos, siga/compartilhe/curta têm cooldown por conta; a primeira curtida já gera agradecimento com o nome do participante.
 
 ## Apresentadora MP4 opcional
 
 No painel, selecione um MP4 autorizado de até 250 MB. Ele é salvo **somente no servidor local**, em `media/presenter.mp4`, e compartilhado com o visor. Escolha abertura, intervalos ou ambos; mute por padrão. A janela fica na margem superior, com transição de opacidade, e desaparece durante a pergunta. O seletor de intervalo controla seu tempo de exibição. Clique em remover para desativar. Para apagar o arquivo do disco, feche o programa e exclua a pasta `media`.
 
-Vídeo não simula agradecimentos personalizados. Nenhum vídeo de pessoa real ou TTS está incluído. Áudio depende da permissão de reprodução automática do navegador/OBS; para evitar interferências, deixe o vídeo mudo. Os efeitos sonoros do jogo são opcionais e saem pelo painel: capture esse áudio separadamente se quiser transmiti-lo.
+Vídeo não simula agradecimentos personalizados. Nenhum vídeo de pessoa real está incluído. A voz da arena usa síntese local do navegador, sem clonagem de voz ou API paga. Áudio depende da permissão de reprodução automática do navegador/OBS; para evitar interferências, deixe o vídeo mudo. Os efeitos sonoros do jogo são opcionais e saem pelo painel: capture esse áudio separadamente se quiser transmiti-lo.
 
 ## OBS / TikTok LIVE Studio / Brave / Edge
 
@@ -98,4 +115,4 @@ Evidências em `evidence/`. A homologação em Windows, OBS/TikTok Studio e LIVE
 
 `engine.py`: estados, relógio, votos e persistência. `questions.py`: 122 questões em cinco categorias. `servidor.py`: HTTP/SSE e inicialização. `static/app.js`: apresentação e painel. `static/tikfinity.js`: adaptador WebSocket. `mock_tikfinity.py`: simulador. `launcher.c`: inicializador Windows.
 
-Python oficial embutido: licença em `runtime/LICENSE.txt`. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP; nenhuma alteração foi publicada em repositório GitHub remoto.
+Python oficial embutido: licença em `runtime/LICENSE.txt`. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP e está publicado em https://github.com/scarfacerichh-beep/tiktoklives . O ZIP da pasta downloads inclui o runtime Windows.

@@ -1,0 +1,32 @@
+INTERALIVES QI ARENA 4.1 — VOZ E BAÚS VISUAIS
+
+1. FECHE a versão antiga, inclusive a janela do servidor.
+2. EXTRAIA TODO o ZIP 4.1 em uma pasta nova.
+3. Abra INTERALIVES_QI_STUDIO.exe.
+4. Abra o painel no Microsoft Edge.
+5. Em VOZ DA ARENA, escolha uma voz LOCAL em português.
+6. Clique ATIVAR E TESTAR VOZ. Confirme que ouviu o teste.
+7. No OBS/TikTok Studio, capture o ÁUDIO DO NAVEGADOR DO PAINEL
+   ou do sistema. O visor de transmissão NÃO é a fonte da voz.
+8. Teste uma curtida, seguir e responder D com seu nome no painel.
+9. Depois selecione TikFinity REAL e confira eventos da sua LIVE.
+
+SE NÃO HOUVER VOZ:
+Instale uma voz Português (Brasil) nas configurações de fala do Windows,
+reabra o Edge e teste novamente. Não existe API paga ou voz em nuvem.
+
+O RANKING usa ACERTOS primeiro e pontos como desempate.
+A cada 5 acertos, um BAÚ VISUAL libera aura, estrela, selo ou confetes.
+São efeitos cosméticos, sem valor real e sem envio de presentes TikTok.
+
+Com muitas interações, a voz limita falas para não atropelar o jogo.
+Recomendamos 10 segundos no intervalo de revelação.
+Após recarregar o painel, clique novamente em Ativar e testar voz.
+
+Para manter o ranking anterior, copie session.json da pasta antiga,
+com ambos os servidores fechados. Pontos antigos são preservados,
+mas não é possível recuperar quantos acertos geraram esses pontos.
+
+Testes de voz automatizados usam API simulada. Áudio audível e captura
+na sua instalação Windows/OBS precisam de teste antes da LIVE.
+Consulte README.md e docs/RELATORIO_4.1.md.

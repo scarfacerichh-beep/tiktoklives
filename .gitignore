@@ -11,3 +11,6 @@ zig-local/
 npm-cache/
 release/
 python-windows.zip
+/evidence/*.png
+/evidence/*-summary.json
+/evidence/*.txt

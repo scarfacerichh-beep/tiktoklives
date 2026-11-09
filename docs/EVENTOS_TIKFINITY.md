@@ -16,7 +16,7 @@ Referência oficial consultada em 09/11/2026: https://tikfinity.zerody.one/tikto
 - `chat`: primeira letra única, opcional ponto/exclamação. Primeira resposta por conta vence, mesmo incorreta. Mensagem repetida é deduplicada.
 - `gift`: ID convertido para string. Nome do presente não determina poder. Tipo 1 aguarda `repeatEnd`; grupo/combo deduplica uma sequência inteira. Sem grupo: `msgId`, `messageId` ou `transactionId`; sem identificadores, cooldown de 2 segundos. Combos geram uma aplicação, não `repeatCount` aplicações.
 - Efeito de tempo só em fase de resposta ativa, +3 por aplicação, teto +9. Dica uma vez. Não libera dica durante a memorização.
-- Seguidores/compartilhamentos: cooldown de 15 segundos por conta/tipo. Curtidas são agregadas após esse cooldown; o número não representa o total oficial de likes da LIVE.
+- Seguidores, curtidas e compartilhamentos: cooldown de 30 segundos por conta/tipo. Uma única curtida gera agradecimento nominal. A contagem interna após cooldown não representa o total oficial de likes da LIVE.
 - A fila visual e o log são limitados. O adaptador aplica backpressure por lotes e associa os eventos à rodada em que os recebeu. Limites de capacidade estão no README.
 
 ## Simulador

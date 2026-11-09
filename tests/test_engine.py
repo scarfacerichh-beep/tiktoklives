@@ -63,7 +63,7 @@ class TestEngine(unittest.TestCase):
         self.answer_phase();old=self.e.round;self.e.start();self.e.command('events',[dict(event='chat',round=old,data=dict(userId='u',comment='A'))]);self.assertFalse(self.e.votes)
     def test_saved_persistence_and_corruption(self):
         with tempfile.TemporaryDirectory() as td:
-            p=Path(td)/'session.json';e=Engine(storage=p);e.scores={'1':dict(name='Ána',points=150)};e.settings['persist']=True;e.save();self.assertEqual(Engine(storage=p).scores,e.scores);p.write_text('bad');self.assertFalse(Engine(storage=p).scores)
+            p=Path(td)/'session.json';e=Engine(storage=p);e.scores={'1':dict(name='Ána',points=150)};e.settings['persist']=True;e.save();self.assertEqual(Engine(storage=p).scores['1']['points'],150);self.assertEqual(Engine(storage=p).scores['1']['name'],'Ána');p.write_text('bad');self.assertFalse(Engine(storage=p).scores)
     def test_moderation(self):
         self.answer_phase();self.e.settings['blocked']='1';self.event(comment=self.correct());self.assertFalse(self.e.votes);self.e.settings['blocked']='';self.e.settings['moderation']=True;self.event(comment=self.correct());self.assertFalse(self.e.votes)
     def test_one_hour_virtual_soak(self):

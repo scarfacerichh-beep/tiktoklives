@@ -14,7 +14,7 @@ int wmain(int argc,wchar_t **argv) {
     wchar_t portEnv[16]={0};GetEnvironmentVariableW(L"INTERALIVES_PORT",portEnv,16);
     long port=argc>1?wcstol(argv[1],NULL,10):wcstol(portEnv,NULL,10);if(port<1024||port>65535)port=8788;
     swprintf(command,32768,L"\"%ls\" \"%ls\\servidor.py\" --open --port %ld",python,root,port);
-    SetConsoleOutputCP(CP_UTF8);SetConsoleTitleW(L"INTERALIVES QI ARENA STUDIO 4.0");
+    SetConsoleOutputCP(CP_UTF8);SetConsoleTitleW(L"INTERALIVES QI ARENA STUDIO 4.1");
     if(GetFileAttributesW(python)==INVALID_FILE_ATTRIBUTES){
         puts("Extraia TODO o ZIP antes de iniciar. Pasta runtime ausente.");getchar();return 1;
     }

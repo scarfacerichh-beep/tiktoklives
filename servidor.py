@@ -10,6 +10,8 @@ engine=Engine(storage=ROOT/'session.json')
 condition=threading.Condition()
 lease_owner=""
 lease_until=0
+voice_owner=""
+voice_until=0
 class Handler(SimpleHTTPRequestHandler):
     protocol_version='HTTP/1.1'
     def log_message(self,*args):pass
@@ -42,7 +44,7 @@ class Handler(SimpleHTTPRequestHandler):
             super().do_GET()
         else:self.send_error(404)
     def do_POST(self):
-        global lease_owner,lease_until
+        global lease_owner,lease_until,voice_owner,voice_until
         origin=self.headers.get('Origin')
         if origin and origin!=f'http://{self.headers.get("Host")}':return self.json_response(403,{'error':'Origem não permitida'})
         if urlparse(self.path).path=='/api/video':
@@ -61,6 +63,17 @@ class Handler(SimpleHTTPRequestHandler):
                 tmp.replace(media/'presenter.mp4')
                 return self.json_response(200,{'url':'/media/presenter.mp4?v='+str(time.time_ns())})
             except (ValueError,OSError):return self.json_response(400,{'error':'Use MP4 válido de até 250 MB.'})
+        if urlparse(self.path).path=='/api/voice-lease':
+            try:
+                size=int(self.headers.get('Content-Length','0'))
+                if not 0<size<300:raise ValueError()
+                data=json.loads(self.rfile.read(size));owner=str(data['owner'])[:60]
+                with engine.lock:
+                    if data.get('release') and voice_owner==owner:voice_owner='';voice_until=0
+                    acquired=not data.get('release') and (voice_owner==owner or time.monotonic()>voice_until)
+                    if acquired:voice_owner=owner;voice_until=time.monotonic()+25
+                return self.json_response(200,{'acquired':acquired})
+            except (ValueError,KeyError,TypeError):return self.json_response(400,{'error':'Identificador inválido'})
         if urlparse(self.path).path=='/api/lease':
             try:
                 size=int(self.headers.get('Content-Length','0'))
@@ -93,7 +106,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');args=parser.parse_args()
     try:server=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
     except OSError as e:print(f'Não foi possível iniciar na porta {args.port}: {e}. Feche outra instância ou use --port 8789.');return 1
-    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{args.port}/';print('INTERALIVES QI ARENA STUDIO 4.0\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
+    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{args.port}/';print('INTERALIVES QI ARENA STUDIO 4.1\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
     if args.open:webbrowser.open(url)
     try:server.serve_forever()
     except KeyboardInterrupt:server.server_close()

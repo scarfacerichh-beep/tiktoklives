@@ -1,3 +1,14 @@
+# 4.1.0 — 09/11/2026
+
+- Primeira curtida gera agradecimento por nome, sem esperar 100 curtidas.
+- Voz pt-BR local opcional: curtidas, seguidores, compartilhamentos, votos e comentários livres.
+- Confirmação da letra com frases variadas, sem antecipar correção; narração opcional e convite quando o chat está parado.
+- Fila limitada, validade curta, cooldowns, seleção de voz/volume/velocidade, botão de teste e concessão para uma única aba de áudio.
+- Ranking por acertos, pontos como desempate e migração sem inventar acertos antigos.
+- Baús cosméticos gratuitos a cada 5 acertos, revelados no intervalo, com aura, estrela, selo ou confetes.
+- Persistência JSON em UTF-8 para nomes com emojis no Windows.
+- Testes adicionais de voz simulada, moderação, ranking, conquistas, retomada e ausência de voz instalada.
+
 # 4.0.0 — 09/11/2026
 
 - Preservada identidade INTERALIVES, opções em quatro cores, cronômetro, placar e presentes opcionais.

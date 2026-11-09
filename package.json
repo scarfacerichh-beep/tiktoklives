@@ -1,1 +1,1 @@
-{"name":"interalives-qi-arena-studio","version":"4.0.0","private":true,"scripts":{"test:e2e":"node tests/e2e.cjs"},"devDependencies":{"playwright":"1.62.1"}}
+{"name":"interalives-qi-arena-studio","version":"4.1.0","private":true,"scripts":{"test:e2e":"node tests/e2e.cjs","test:speech":"node --test tests/speech.test.cjs","test:engagement":"node tests/engagement.e2e.cjs"},"devDependencies":{"playwright":"1.62.1"}}
