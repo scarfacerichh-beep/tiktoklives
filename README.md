@@ -1,4 +1,7 @@
-> **Download Windows:** abra Releases → v4.0.0 e baixe `INTERALIVES_QI_STUDIO_FINAL.zip`. Extraia tudo e execute `INTERALIVES_QI_STUDIO.exe`. O código deste repositório não inclui o runtime; ele está no ZIP da release.
+> **[BAIXAR JOGO COMPLETO PARA WINDOWS — ZIP (18 MB)](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_STUDIO_FINAL.zip)**
+>
+> Extraia todo o ZIP e abra `INTERALIVES_QI_STUDIO.exe`. O runtime está incluído no ZIP.
+
 
 # INTERALIVES QI ARENA STUDIO 4.0.0
 
