@@ -1,0 +1,13 @@
+__pycache__/
+node_modules/
+session.json
+session.tmp
+media/
+*.log
+buildtools/
+formattools/
+zig-cache/
+zig-local/
+npm-cache/
+release/
+python-windows.zip

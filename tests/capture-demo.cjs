@@ -1,0 +1,11 @@
+// Gera capturas reais com dados de demonstração. Reinicia a sessão de teste.
+const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+const root=path.join(__dirname,'..'),out=path.join(root,'evidence'),base=process.env.ARENA_URL||'http://127.0.0.1:8790';
+const bank=JSON.parse(cp.execFileSync(process.env.PYTHON||'python3',['-c','import json;from questions import BANK;print(json.dumps(BANK))'],{cwd:root}));
+async function cmd(action,data={}){return(await fetch(base+'/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,data})})).json();}
+(async()=>{await cmd('reset');await cmd('settings',{duration:25,interval:6,auto:false,level:1,persist:false,roseId:'5655',hintId:'1',specialId:'999',videoURL:''});
+let s;for(let round=0;round<3;round++){do{s=await cmd('next');}while(s.phase==='memorize'||(round===2&&(s.q.cat!=='MATEMÁTICA'||s.q.q.length>24)));const q=bank.find(q=>q.id===s.q.id);for(let i=0;i<=round;i++)await cmd('event',{simulated:true,event:'chat',data:{userId:'demo'+i,nickname:['Mariana','Pedro','Bia 🌟'][i],comment:'ABCD'[q.key],msgId:crypto.randomUUID()}});}
+await cmd('status',{status:'demonstração local · sem LIVE real',mode:'TESTE · DEMONSTRAÇÃO'});
+const b=await chromium.launch({executablePath:process.env.CHROMIUM||'/usr/bin/chromium',args:['--no-sandbox']});const v=await b.newPage({viewport:{width:1080,height:1920}});await v.goto(base+'/?live=1');await v.evaluate(()=>document.fonts.ready);await v.waitForFunction(()=>document.querySelector('#responseCount').textContent==='3 respostas');await v.waitForTimeout(800);
+for(const [width,height] of [[1080,1920],[540,960],[360,640]]){await v.setViewportSize({width,height});await v.waitForTimeout(150);await v.screenshot({path:path.join(out,`live-${width}x${height}.png`)});}
+const p=await b.newPage({viewport:{width:1536,height:1100}});await p.goto(base);await p.evaluate(()=>document.fonts.ready);await p.screenshot({path:path.join(out,'painel.png'),fullPage:true});await b.close();await cmd('stop');console.log('Capturas de demonstração produzidas; sessão parada.');})().catch(e=>{console.error(e);process.exit(1)});
