@@ -1,3 +1,11 @@
+# 4.4 — arena viva e voz suave
+
+- Mascote, reações visuais nominais e cores nas alternativas.
+- Voz natural opcional Francisca/Antônio com autorização por aba; voz local mais lenta.
+- Versão visível, verificação dos arquivos e porta alternativa para evitar servidor antigo.
+- Código-fonte sem EXE; instalação opcional de edge-tts separada.
+- 51 testes Python, 20 JS e suites de navegador. Veja RELATORIO_4.4.md.
+
 # 4.3.1 — distribuição em código-fonte
 
 - Suspensos os ZIPs com inicializador compilado após bloqueio por antivírus reportado pelo usuário; causa ainda não determinada.

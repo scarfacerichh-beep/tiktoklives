@@ -1,13 +1,16 @@
+import {ArenaAudience} from './audience.js';
+import {BUILD_VERSION,UI_SCHEMA} from './build.js';
 import {TikFinity} from './tikfinity.js';
 import {ArenaPrompts} from './prompts.js';
 import {ArenaMotion} from './motion.js';
 import {ArenaSpeech} from './speech.js';
-const narrator=new ArenaSpeech({authorize:()=>voiceLease(),onStatus:message=>{const el=document.getElementById('voiceStatus');if(el)el.textContent=message;}});
+const narrator=new ArenaSpeech({authorize:()=>voiceLease(),onlinePlayer:playNatural,onStatus:message=>{const el=document.getElementById('voiceStatus');if(el)el.textContent=message;}});
 const $=id=>document.getElementById(id),live=new URLSearchParams(location.search).has('live'),letters='ABCD';
 let serverConnected=false;let snapshot=null,arrived=0,lastQ='',lastRank='',alertKey='',audio,mode='real',adapterStatus='',lastStatusSent=0;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const motion=new ArenaMotion();
 const prompts=new ArenaPrompts();
+const audience=new ArenaAudience({motion});
 async function command(action,data={}){
  try{const r=await fetch('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,data})});if(!r.ok)throw Error(r.status);return await r.json();}
  catch(e){$('sessionStatus').textContent='Servidor indisponível · tentando reconectar';}
@@ -38,7 +41,7 @@ function render(s){
  document.querySelector('.sec').textContent=(reveal||s.state==='interval')?'até a próxima rodada':'segundos restantes';
  document.querySelector('.gift.rose small').textContent=s.settings.roseId?'+3s • teto +9s':'Efeito visual';
  document.querySelector('.gift.tiktok small').textContent=s.settings.hintId?'1 dica / rodada':'Efeito visual';
- text('microcopy',reveal?'ENTENDEU? VEM MAIS UM DESAFIO!':s.phase==='memorize'?'Memorize: as opções aparecem em 5 segundos.':'COMENTE A / B / C / D · JOGUE GRÁTIS');
+ text('microcopy',reveal?'ENTENDEU? VEM MAIS UM DESAFIO!':s.phase==='memorize'?'Memorize: as opções aparecem em 5 segundos.':'COMENTE A / B / C / D');
  const signature=JSON.stringify([q?.id,s.phase,s.state==='idle']);
  if(signature!==lastQ){lastQ=signature;$('answers').replaceChildren();if(q&&s.state!=='idle')q.ans.forEach((a,i)=>{const box=document.createElement('div');box.className='answer';box.dataset.index=i;for(const [cls,val] of [['letter',letters[i]],['answer-text',a],['vote-number','0']]){const el=document.createElement('span');el.className=cls;el.textContent=val;box.append(el);}$('answers').append(box);});}
  [...$('answers').children].forEach((box,i)=>{box.classList.toggle('correct',reveal&&q.correct===i);box.querySelector('.vote-number').textContent=s.votes[i];box.style.setProperty('--votes',(s.count?100*s.votes[i]/s.count:0)+'%');});
@@ -48,18 +51,18 @@ function render(s){
  const rankSignature=JSON.stringify(s.rank);if(rankSignature!==lastRank){lastRank=rankSignature;[...$('leaderboard').children].forEach((el,i)=>{el.classList.toggle('has-reward',!!s.rank[i]?.cosmetic);el.dataset.cosmetic=s.rank[i]?.cosmetic||'';el.querySelector('strong').textContent=(s.rank[i]?.name?(s.rank[i].name):null)||['Seu nome aqui','Participe','Comente!'][i];el.querySelector('.pts').textContent=hitsLabel(s.rank[i]?.hits||0)+' · '+(s.rank[i]?.points||0)+' pts';});$('top10').replaceChildren();for(const r of s.rank){const li=document.createElement('li');li.textContent=r.name+' · '+hitsLabel(r.hits||0)+' · '+r.points+' pts'+(r.rewards?' · 🎁 '+r.rewards+' baú(s)':'');$('top10').append(li);}}
  if(s.alert){const key=JSON.stringify(s.alert);if(alertKey!==key){alertKey=key;text('toastText',s.alert.text);$('toast').classList.remove('visible');void $('toast').offsetWidth;$('toast').classList.add('visible');$('toast').classList.toggle('reward-toast',s.alert.kind==='reward');beep();}}else{$('toast').classList.remove('visible');alertKey='';}
  document.querySelector('.arenaFooter').style.visibility=s.alert?'hidden':'visible';
- motion.render(s);prompts.render(s);text('motionStatus',motion.preference.matches?'Seu sistema está com movimento reduzido; a arena respeita essa preferência.':motion.mode==='off'?'Movimento desligado. As cores e o jogo continuam ativos.':'Animações acompanham votos, rodadas, ranking e conquistas reais.');
+ motion.render(s);prompts.render(s);audience.render(s);text('motionStatus',motion.preference.matches?'Seu sistema está com movimento reduzido; a arena respeita essa preferência.':motion.mode==='off'?'Movimento desligado. As cores e o jogo continuam ativos.':'Animações acompanham votos, rodadas, ranking e conquistas reais.');
  text('log',s.logs.join('\n'));
  const video=$('presenter');if(s.settings.videoURL&&video.dataset.serverURL!==s.settings.videoURL){video.src=s.settings.videoURL;video.dataset.serverURL=s.settings.videoURL;}else if(!s.settings.videoURL&&video.dataset.serverURL){video.removeAttribute('src');delete video.dataset.serverURL;}video.muted=s.settings.videoMuted;const when=s.settings.videoWhen;video.classList.toggle('show',!!video.src&&((s.state==='idle'&&when!=='interval')||(['reveal','interval'].includes(s.state)&&when!=='idle')));if(video.src){if(video.classList.contains('show'))video.play().catch(()=>{});else video.pause();}
- if(!live&&document.activeElement?.closest('.panel')===null){for(const k of ['duration','interval','level','roseId','hintId','specialId','blocked','voiceRate','voiceVolume','visualMotion','visualPalette','tickerSpeed'])$(k).value=s.settings[k];for(const k of ['auto','persist','moderation','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled'])$(k).checked=s.settings[k];}
+ if(!live&&document.activeElement?.closest('.panel')===null){for(const k of ['duration','interval','level','roseId','hintId','specialId','blocked','voiceRate','voiceVolume','visualMotion','visualPalette','tickerSpeed','voiceEngine','neuralVoice'])$(k).value=s.settings[k];for(const k of ['auto','persist','moderation','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled','viewerReactions'])$(k).checked=s.settings[k];}
 }
 const stream=new EventSource('/api/events');stream.onmessage=e=>{try{render(JSON.parse(e.data));}catch(err){console.error(err);}};
 stream.onerror=()=>{serverConnected=false;narrator.stop('Servidor desconectado · reative a voz após reconectar');text('phase','RECONECTANDO AO SERVIDOR');text('sessionStatus','Servidor local desconectado · reconexão automática');};
 function tick(){if(snapshot&&serverConnected){let left=snapshot.remaining;if(['running','reveal','interval'].includes(snapshot.state))left=Math.max(0,left-(performance.now()-arrived)/1000);text('timer',String(Math.ceil(left)).padStart(2,'0'));$('progress').style.width=Math.max(0,Math.min(100,100*left/snapshot.total))+'%';document.querySelector('.canvas').classList.toggle('danger',snapshot.state==='running'&&left<=5);motion.tick(left,snapshot);prompts.tick(left);if(snapshot.state==='running'&&left===0)text('phase','ENCERRANDO RESPOSTAS');}requestAnimationFrame(tick);}requestAnimationFrame(tick);
 $('openViewer').onclick=()=>window.open('/?live=1','_blank','noopener');
 for(const id of ['start','pause','next','stop','reset','resetRank'])$(id).onclick=()=>command(id);
-async function saveSettings(){const data={};for(const k of ['duration','interval','level'])data[k]=Number($(k).value);for(const k of ['roseId','hintId','specialId','blocked','visualMotion','visualPalette','tickerSpeed'])data[k]=$(k).value;for(const k of ['auto','persist','moderation','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled'])data[k]=$(k).checked;data.voiceRate=Number($('voiceRate').value);data.voiceVolume=Number($('voiceVolume').value);await command('settings',data);}
-for(const id of ['duration','interval','level','auto','persist','moderation','blocked','voiceEnabled','voiceNarration','voiceRate','voiceVolume','rewardsEnabled','visualMotion','visualPalette','tickerEnabled','tickerSpeed'])$(id).onchange=saveSettings;$('saveIds').onclick=saveSettings;
+async function saveSettings(){const data={};for(const k of ['duration','interval','level'])data[k]=Number($(k).value);for(const k of ['roseId','hintId','specialId','blocked','visualMotion','visualPalette','tickerSpeed','voiceEngine','neuralVoice'])data[k]=$(k).value;for(const k of ['auto','persist','moderation','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled','viewerReactions'])data[k]=$(k).checked;data.voiceRate=Number($('voiceRate').value);data.voiceVolume=Number($('voiceVolume').value);await command('settings',data);}
+for(const id of ['duration','interval','level','auto','persist','moderation','blocked','voiceEnabled','voiceNarration','voiceRate','voiceVolume','rewardsEnabled','visualMotion','visualPalette','tickerEnabled','tickerSpeed','viewerReactions','voiceEngine','neuralVoice'])$(id).onchange=saveSettings;$('saveIds').onclick=saveSettings;
 function simulate(event,data={}){return command('event',{event,simulated:true,data:{userId:$('tester').value||'Visitante',nickname:$('tester').value||'Visitante',msgId:crypto.randomUUID(),...data}});}
 for(const c of letters)$('test'+c).onclick=()=>simulate('chat',{comment:c});
 $('testRose').onclick=()=>simulate('gift',{giftId:snapshot?.settings.roseId||'SEM_MAPEAMENTO',giftType:0});
@@ -87,11 +90,31 @@ function refreshVoices(){const select=$('voiceChoice'),saved=select.value||local
 function localVoice(){try{return localStorage.getItem('arena-voice')||'';}catch{return '';}}
 $('voiceChoice').onchange=()=>{narrator.voiceURI=$('voiceChoice').value;try{localStorage.setItem('arena-voice',narrator.voiceURI);}catch{}};
 if(!live){refreshVoices();globalThis.speechSynthesis?.addEventListener('voiceschanged',refreshVoices);}
-async function voiceLease(release=false){try{const r=await fetch('/api/voice-lease',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({owner:voiceOwner,release}),signal:AbortSignal.timeout(3000)});return (await r.json()).acquired;}catch{return false;}}
+async function voiceLease(release=false){try{const r=await fetch('/api/voice-lease',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({owner:voiceOwner,release,online:$('onlineConsent').checked&&snapshot?.settings.voiceEngine==='neural'}),signal:AbortSignal.timeout(3000)});return (await r.json()).acquired;}catch{return false;}}
 $('enableVoice').onclick=async()=>{
  if(!snapshot?.settings.voiceEnabled){text('voiceStatus','Marque Responder por voz antes de ativar.');return;}
  if(!await voiceLease()){text('voiceStatus','Outra aba está com a voz ativa. Silencie nela e tente novamente.');return;}
- refreshVoices();if(!narrator.enable()){await voiceLease(true);return;}narrator.configure(snapshot.settings);narrator.test();clearInterval(voiceHeartbeat);voiceHeartbeat=setInterval(async()=>{if(!narrator.enabled){clearInterval(voiceHeartbeat);await voiceLease(true);}else if(!await voiceLease()){narrator.stop('Voz interrompida: outra aba assumiu o áudio.');clearInterval(voiceHeartbeat);}},2000);
+ narrator.configure(snapshot.settings);if(snapshot.settings.voiceEngine==='neural'&&!$('onlineConsent').checked){text('voiceStatus','Autorize o envio das falas para ativar a voz online.');await voiceLease(true);return;}refreshVoices();if(!narrator.enable()){await voiceLease(true);return;}narrator.configure(snapshot.settings);narrator.test();clearInterval(voiceHeartbeat);voiceHeartbeat=setInterval(async()=>{if(!narrator.enabled){clearInterval(voiceHeartbeat);await voiceLease(true);}else if(!await voiceLease()){narrator.stop('Voz interrompida: outra aba assumiu o áudio.');clearInterval(voiceHeartbeat);}},2000);
 };
 $('muteVoice').onclick=()=>{narrator.stop();clearInterval(voiceHeartbeat);voiceLease(true);};
 addEventListener('pagehide',()=>{narrator.stop();clearInterval(voiceHeartbeat);if(!live)navigator.sendBeacon('/api/voice-lease',new Blob([JSON.stringify({owner:voiceOwner,release:true})],{type:'application/json'}));});
+
+async function playNatural(item,{signal,rate,volume,voice}){
+ if(!$('onlineConsent').checked)throw Error('Autorize o envio das falas antes de usar a voz online.');
+ const r=await fetch('/api/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({owner:voiceOwner,consent:true,text:item.text,voice,rate}),signal});
+ if(!r.ok){const d=await r.json();throw Error(d.error||'Voz online indisponível');}
+ const blob=await r.blob();if(signal.aborted)throw new DOMException('Cancelado','AbortError');
+ const url=URL.createObjectURL(blob),player=new Audio(url);player.volume=volume;
+ return new Promise((resolve,reject)=>{const cleanup=()=>{player.pause();player.removeAttribute('src');URL.revokeObjectURL(url);signal.removeEventListener('abort',abort);};const abort=()=>{cleanup();reject(new DOMException('Cancelado','AbortError'));};signal.addEventListener('abort',abort,{once:true});player.onended=()=>{cleanup();resolve();};player.onerror=()=>{cleanup();reject(Error('Não foi possível reproduzir a voz natural.'));};player.play().catch(e=>{cleanup();reject(e);});});
+}
+$('onlineConsent').onchange=()=>{if(!$('onlineConsent').checked){narrator.stop('Autorização online retirada.');voiceLease(true);}};
+$('voiceEngine').addEventListener('change',()=>narrator.stop('Tipo de voz alterado. Clique em Ativar e testar voz.'));
+$('liveURL').value=location.origin+'/?live=1';
+$('copyLiveURL').onclick=async()=>{try{await navigator.clipboard.writeText($('liveURL').value);$('copyLiveURL').textContent='Endereço copiado';}catch{$('liveURL').select();}};
+fetch('/api/health').then(r=>r.json()).then(info=>{
+ const css=Number(getComputedStyle(document.documentElement).getPropertyValue('--arena-ui-schema'));
+ const ok=info.version===BUILD_VERSION&&info.uiSchema===UI_SCHEMA&&css===UI_SCHEMA;
+ text('buildStatus',ok?'Arquivos e servidor 4.4 confirmados · pasta '+info.folder+(info.autoSelectedPort?' · porta alternativa: atualize a fonte da LIVE.':''):'ATENÇÃO: arquivos ou servidor antigos. Extraia a atualização em uma pasta nova e abra pelo BAT dessa pasta.');
+ text('naturalStatus',info.naturalVoiceInstalled?'Voz natural instalada. Autorize o envio de falas e clique em Ativar e testar voz.':'Para voz natural, execute INSTALAR_VOZ_NATURAL.bat uma vez. Sem chave ou assinatura; precisa de internet.');
+ if(!ok){document.body.classList.add('build-mismatch');const warning=document.createElement('div');warning.className='build-warning';warning.textContent='VERSÕES DIFERENTES · abra a atualização em uma pasta nova';document.body.append(warning);}
+}).catch(()=>text('buildStatus','Servidor antigo ou indisponível. Abra a versão 4.4 em uma pasta nova.'));

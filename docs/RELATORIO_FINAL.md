@@ -1,3 +1,5 @@
+> Relatório histórico de uma edição anterior. Os pacotes nativos estão suspensos após alerta de antivírus. Para iniciar a edição atual, use [COMECE_4.4.md](COMECE_4.4.md).
+
 # Relatório de entrega — INTERALIVES QI ARENA STUDIO 4.0.0
 
 Data: 09/11/2026. Origem: `INTERALIVES_QI_CODEX_PRONTO.zip`. Os documentos do ZIP foram tratados como requisitos do projeto, subordinados ao pedido do usuário. Nenhuma instrução de publicação remota foi inferida. A busca no GitHub por INTERALIVES não identificou repositório acessível para este projeto; a entrega é local, sem commit/push remoto.

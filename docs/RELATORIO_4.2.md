@@ -1,3 +1,5 @@
+> Relatório histórico de uma edição anterior. Os pacotes nativos estão suspensos após alerta de antivírus. Para iniciar a edição atual, use [COMECE_4.4.md](COMECE_4.4.md).
+
 # INTERALIVES QI ARENA STUDIO 4.2 — Arena neon
 
 Atualização de 09/11/2026, solicitada para dar mais cor e movimento ao jogo existente. Estrutura e mecânica foram preservadas, incluindo voz local, TikFinity, ranking por acertos e conquistas cosméticas.

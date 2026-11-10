@@ -6,7 +6,7 @@ Em 09/11/2026 o usuário reportou bloqueio no navegador, com a mensagem **“Nã
 
 - Os quatro ZIPs com inicializador compilado foram retirados da versão atual da pasta downloads do GitHub. O histórico Git permanece como evidência; isso não significa remoção completa de cópias históricas ou de arquivos já baixados.
 - O README passou a alertar sobre a suspensão. Não é recomendado restaurar/permitir o arquivo bloqueado ou desativar proteções.
-- A edição 4.3.1 contém código e recursos do jogo, sem inicializador `.exe`, runtime embutido, `.dll` ou `.pyd`. Não é o ZIP bloqueado renomeado ou protegido por senha. Os scripts `.bat` são legíveis e usam exclusivamente o Python instalado separadamente pelo usuário; recusam uma pasta que ainda contenha o inicializador antigo.
+- As edições em código-fonte 4.3.1 e 4.4 contêm código e recursos do jogo, sem inicializador `.exe`, runtime embutido, `.dll` ou `.pyd`. Não é o ZIP bloqueado renomeado ou protegido por senha. Os scripts `.bat` são legíveis e usam exclusivamente o Python instalado separadamente pelo usuário; recusam uma pasta que ainda contenha o inicializador antigo.
 
 ## O que foi conferido e o que não foi
 

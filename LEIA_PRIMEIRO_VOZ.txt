@@ -1,4 +1,4 @@
-INTERALIVES QI ARENA 4.3.1 — EDICAO EM CODIGO-FONTE
+INTERALIVES QI ARENA 4.4 — EDICAO EM CODIGO-FONTE
 
 O pacote anterior com executavel foi bloqueado pelo antivirus e retirado
 da distribuicao atual. A causa da deteccao continua em investigacao.
@@ -13,9 +13,14 @@ aqui. Caso surja outro alerta, mantenha o bloqueio e informe a ameaca.
    https://www.python.org/downloads/windows/
 2. Extraia o ZIP em uma PASTA NOVA. Nao misture com os pacotes antigos.
 3. Abra INICIAR_INTERALIVES_QI.bat. Ele nao executa o inicializador antigo.
-   Alternativa pelo terminal: py -3 servidor.py --open
-4. O painel abre em http://127.0.0.1:8788/
-5. No Edge, escolha a voz pt-BR e clique Ativar e testar voz se desejar.
+   Alternativa pelo terminal: py -3 servidor.py --auto-port --open
+4. Confira V4.4 no visor e copie o endereco atual pelo painel.
+   A porta muda se a anterior estiver ocupada. Atualize a fonte do OBS.
+5. Para a voz suave: execute INSTALAR_VOZ_NATURAL.bat uma vez.
+   Reinicie o servidor, escolha Natural online / Francisca no painel,
+   autorize o envio das falas e apelidos a Microsoft e clique Ativar.
+   Precisa de internet. Sem autorizacao, nenhuma fala e enviada.
+   A voz local pt-BR continua disponivel sem instalar dependencias.
 6. No OBS/Studio, capture o audio do painel ou do sistema.
 7. Escolha paleta, faixa de mensagens e velocidade no painel.
 

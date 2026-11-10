@@ -14,3 +14,5 @@ python-windows.zip
 /evidence/*.png
 /evidence/*-summary.json
 /evidence/*.txt
+
+.venv/

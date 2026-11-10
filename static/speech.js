@@ -1,17 +1,18 @@
 // Voz local do navegador: fila limitada, sem APIs pagas ou leitura livre do chat.
 export class ArenaSpeech {
-  constructor({synth=globalThis.speechSynthesis,Utterance=globalThis.SpeechSynthesisUtterance,onStatus=()=>{},now=()=>Date.now(),gap=600,authorize=null}={}) {
-    Object.assign(this,{synth,Utterance,onStatus,now,gap,authorize});
-    this.generation=0;this.enabled=false;this.queue=[];this.current=null;this.epoch=null;this.lastId=0;this.rate=1.05;this.volume=.8;this.voiceURI='';this.state=null;
+  constructor({synth=globalThis.speechSynthesis,Utterance=globalThis.SpeechSynthesisUtterance,onStatus=()=>{},now=()=>Date.now(),gap=600,authorize=null,onlinePlayer=null}={}) {
+    Object.assign(this,{synth,Utterance,onStatus,now,gap,authorize,onlinePlayer});
+    this.generation=0;this.enabled=false;this.queue=[];this.current=null;this.epoch=null;this.lastId=0;this.rate=.94;this.volume=.75;this.engine='local';this.neuralVoice='pt-BR-FranciscaNeural';this.voiceURI='';this.state=null;
   }
   voices(){return (this.synth?.getVoices()||[]).filter(v=>/^pt(?:-|_)/i.test(v.lang)&&v.localService!==false).sort((a,b)=>Number(/^pt[-_]BR$/i.test(b.lang))-Number(/^pt[-_]BR$/i.test(a.lang)));}
   enable(){
+    if(this.engine==='neural'){if(!this.onlinePlayer){this.onStatus('Voz natural indisponível');return false;}this.enabled=true;return true;}
     if(!this.synth||!this.Utterance){this.onStatus('Este navegador não oferece síntese de voz. Use Edge no Windows.');return false;}
     if(!this.voices().length){this.onStatus('Nenhuma voz local em português disponível. Instale uma voz pt-BR no Windows e reabra o navegador.');return false;}
     this.enabled=true;this.onStatus('Voz ativada · aguardando interações');return true;
   }
-  configure({voiceRate=1.05,voiceVolume=.8}={}){this.rate=Math.max(.7,Math.min(1.4,Number(voiceRate)||1.05));this.volume=Math.max(0,Math.min(1,Number(voiceVolume)||0));}
-  cancelCurrent(){this.generation++;clearTimeout(this.watchdog);if(this.current){this.current=null;this.synth?.cancel();}}
+  configure({voiceRate=.94,voiceVolume=.75,voiceEngine='local',neuralVoice='pt-BR-FranciscaNeural'}={}){if(this.engine!==voiceEngine&&this.current)this.cancelCurrent();this.engine=voiceEngine;this.neuralVoice=neuralVoice;this.rate=Math.max(.7,Math.min(1.4,Number(voiceRate)||.94));this.volume=Math.max(0,Math.min(1,Number(voiceVolume)||0));}
+  cancelCurrent(){this.generation++;this.controller?.abort();clearTimeout(this.watchdog);if(this.current){this.current=null;this.synth?.cancel();}}
   stop(message='Voz desativada'){this.enabled=false;this.queue=[];clearTimeout(this.next);this.next=null;this.cancelCurrent();this.onStatus(message);}
   allowed(item){
     if(item.kind==='demo')return true;
@@ -56,7 +57,16 @@ export class ArenaSpeech {
     }
     this.play(item);
   }
+  playOnline(item){
+    this.current=item;const controller=new AbortController();this.controller=controller;
+    this.onStatus('Preparando voz natural…');
+    this.watchdog=setTimeout(()=>{if(this.current===item)this.stop('Voz online demorou. Verifique a internet e reative a voz.');},23000);
+    Promise.resolve().then(()=>this.onlinePlayer(item,{signal:controller.signal,rate:this.rate,volume:this.volume,voice:this.neuralVoice})).then(()=>{
+      if(this.current!==item)return;clearTimeout(this.watchdog);this.current=null;this.onStatus('Voz natural ativada · aguardando interações');this.next=setTimeout(()=>{this.next=null;this.pump();},this.gap);
+    }).catch(e=>{if(this.current!==item)return;this.stop(e.name==='NotAllowedError'?'Áudio bloqueado. Clique em Ativar voz novamente.':'Voz natural: '+e.message);});
+  }
   play(item){
+    if(this.engine==='neural'){this.playOnline(item);return;}
     const voices=this.voices(),voice=voices.find(v=>v.voiceURI===this.voiceURI)||voices[0];
     if(!voice){this.stop('A voz local deixou de estar disponível. Reabra o navegador.');return;}
     this.current=item;const utterance=new this.Utterance(item.text);utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=this.rate;utterance.volume=this.volume;

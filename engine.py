@@ -2,6 +2,8 @@ import time, threading, json, re
 from collections import OrderedDict, deque
 from pathlib import Path
 from questions import BANK
+from build_info import VERSION
+from audience import Audience
 from interactions import Interactions, spoken_name, COSMETICS
 LETTERS='ABCD'
 def clean(value,limit=48):
@@ -10,9 +12,9 @@ def clean(value,limit=48):
 class Engine:
     def __init__(self,clock=time.monotonic,storage=None):
         self.clock=clock;self.lock=threading.RLock();self.storage=Path(storage) if storage else None
-        self.settings=dict(duration=20,interval=6,auto=True,level=1,persist=False,moderation=False,blocked='',roseId='',hintId='',specialId='',videoURL='',videoMuted=True,videoWhen='both',voiceEnabled=True,voiceNarration=True,voiceRate=1.05,voiceVolume=0.8,rewardsEnabled=True,visualMotion='vivid',visualPalette='party',tickerEnabled=True,tickerSpeed='normal')
+        self.settings=dict(duration=20,interval=6,auto=True,level=1,persist=False,moderation=False,blocked='',roseId='',hintId='',specialId='',videoURL='',videoMuted=True,videoWhen='both',voiceEnabled=True,voiceNarration=True,voiceRate=.94,voiceVolume=.75,rewardsEnabled=True,visualMotion='vivid',visualPalette='party',tickerEnabled=True,tickerSpeed='normal',viewerReactions=True,voiceEngine='local',neuralVoice='pt-BR-FranciscaNeural')
         self.state='idle';self.phase='answer';self.round=0;self.index=0;self.q=None;self.deadline=0;self.remaining=0;self.extra=0;self.hint=False;self.votes={};self.counts=[0,0,0,0];self.scores={};self.seen=OrderedDict();self.cooldowns=OrderedDict();self.logs=deque(maxlen=60);self.alerts=deque(maxlen=12);self.alert=None;self.alert_until=0;self.revision=0;self.mode='REAL · AGUARDANDO EVENTOS';self.connection='desconectado';self.last_event=0;self.likes=0;self.frozen=None
-        self.interactions=Interactions(clock);self.round_names={};self.pending_rewards=deque(maxlen=32);self.rewards=deque(maxlen=8);self.reward_sequence=0
+        self.audience=Audience(clock);self.interactions=Interactions(clock);self.round_names={};self.pending_rewards=deque(maxlen=32);self.rewards=deque(maxlen=8);self.reward_sequence=0
         defaults=self.settings.copy()
         if self.storage and self.storage.exists():
             try:
@@ -23,12 +25,14 @@ class Engine:
                     if k not in self.settings:continue
                     if k in ('duration','interval','level'):
                         lo,hi={'duration':(5,90),'interval':(3,20),'level':(1,3)}[k];self.settings[k]=max(lo,min(hi,int(v)))
-                    elif k in ('auto','persist','moderation','videoMuted','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled'):self.settings[k]=v is True
+                    elif k in ('auto','persist','moderation','videoMuted','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled','viewerReactions'):self.settings[k]=v is True
                     elif k in ('voiceRate','voiceVolume'):
                         self.settings[k]=max(0.7,min(1.4,float(v))) if k=='voiceRate' else max(0,min(1,float(v)))
                     else:self.settings[k]=clean(v,2000 if k=='blocked' else 120)
                 if self.settings['visualMotion'] not in ('vivid','soft','off'):self.settings['visualMotion']='vivid'
                 if self.settings['visualPalette'] not in ('party','candy','aqua','sunset','electric'):self.settings['visualPalette']='party'
+                if self.settings['voiceEngine'] not in ('local','neural'):self.settings['voiceEngine']='local'
+                if self.settings['neuralVoice'] not in ('pt-BR-FranciscaNeural','pt-BR-AntonioNeural'):self.settings['neuralVoice']='pt-BR-FranciscaNeural'
                 if self.settings['tickerSpeed'] not in ('slow','normal','fast'):self.settings['tickerSpeed']='normal'
                 if self.settings['videoURL'] and not self.settings['videoURL'].startswith('/media/presenter.mp4?'):self.settings['videoURL']=''
                 self.scores={clean(k,96):dict(name=clean(v['name']),points=max(0,min(int(v['points']),10**12)),hits=max(0,min(int(v.get('hits',0)),10**9)),streak=0,lastRound=None,rewards=max(0,min(int(v.get('rewards',0)),max(0,int(v.get('hits',0)))//5)),cosmetic=v.get('cosmetic','') if v.get('cosmetic') in ('neon','star','badge','confetti') else '') for k,v in list(saved.get('scores',{}).items())[:10000]} if self.settings['persist'] else {}
@@ -97,24 +101,26 @@ class Engine:
         elif action=='next':self.start()
         elif action=='stop':self.state='idle';self.deadline=0;self.alerts.clear();self.alert=None
         elif action=='reset':
-            self.state='idle';self.round=0;self.index=0;self.q=None;self.votes.clear();self.counts=[0,0,0,0];self.scores.clear();self.round_names.clear();self.pending_rewards.clear();self.rewards.clear();self.interactions.reset();self.alerts.clear();self.alert=None;self.save()
+            self.state='idle';self.round=0;self.index=0;self.q=None;self.votes.clear();self.counts=[0,0,0,0];self.scores.clear();self.round_names.clear();self.pending_rewards.clear();self.rewards.clear();self.interactions.reset();self.audience.reset();self.alerts.clear();self.alert=None;self.save()
         elif action=='resetRank':self.scores.clear();self.pending_rewards.clear();self.rewards.clear();self.interactions.reset();self.save()
         elif action=='settings':
             for k in ('duration','interval','level'):
                 if k in data:
                     lo,hi={'duration':(5,90),'interval':(3,20),'level':(1,3)}[k]
                     self.settings[k]=max(lo,min(hi,int(data[k])))
-            for k in ('auto','persist','moderation','videoMuted','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled'):
+            for k in ('auto','persist','moderation','videoMuted','voiceEnabled','voiceNarration','rewardsEnabled','tickerEnabled','viewerReactions'):
                 if k in data:self.settings[k]=data[k] is True
             for k in ('voiceRate','voiceVolume'):
                 if k in data:self.settings[k]=max(0.7,min(1.4,float(data[k]))) if k=='voiceRate' else max(0,min(1,float(data[k])))
-            for k in ('roseId','hintId','specialId','blocked','videoURL','videoWhen','visualMotion','visualPalette','tickerSpeed'):
+            for k in ('roseId','hintId','specialId','blocked','videoURL','videoWhen','visualMotion','visualPalette','tickerSpeed','voiceEngine','neuralVoice'):
                 if k in data:self.settings[k]=clean(data[k],2000 if k=='blocked' else 120 if k=='videoURL' else 30)
             if self.settings['videoURL'] and not self.settings['videoURL'].startswith('/media/presenter.mp4?'):self.settings['videoURL']=''
             if self.settings['videoWhen'] not in ('both','idle','interval'):self.settings['videoWhen']='both'
             if self.settings['visualMotion'] not in ('vivid','soft','off'):self.settings['visualMotion']='vivid'
             if self.settings['visualPalette'] not in ('party','candy','aqua','sunset','electric'):self.settings['visualPalette']='party'
             if self.settings['tickerSpeed'] not in ('slow','normal','fast'):self.settings['tickerSpeed']='normal'
+            if self.settings['voiceEngine'] not in ('local','neural'):self.settings['voiceEngine']='local'
+            if self.settings['neuralVoice'] not in ('pt-BR-FranciscaNeural','pt-BR-AntonioNeural'):self.settings['neuralVoice']='pt-BR-FranciscaNeural'
             self.save()
         elif action=='status':self.connection=clean(data.get('status'),140);self.mode=clean(data.get('mode'),60)
         elif action=='event':self.event(data)
@@ -143,12 +149,13 @@ class Engine:
             if not choice:return
             if not re.fullmatch(r'[ABCD][.!]?',choice):
                 if mid and self.dedup('chat:'+mid):return
-                if self.speak('comment',f'{spoken_name(name)}, seu comentário chegou! Participe: escolha A, B, C ou D.',uid=uid,cooldown=40):self.notify(f'💬 {name}, bem-vindo! Escolha A, B, C ou D.')
+                if self.audience.add('comment',uid,name,cooldown=40):
+                    self.notify(f'💬 {name}, bem-vindo! Escolha A, B, C ou D.');self.speak('comment',f'{spoken_name(name)}, obrigado pelo comentário! Escolha A, B, C ou D para jogar.',uid=uid,cooldown=40)
                 return
             if self.state!='running' or self.phase!='answer' or now>=self.deadline:return
             if uid in self.votes or len(self.votes)>=20000:return
             if mid and self.dedup('chat:'+mid):return
-            self.votes[uid]=choice[0];self.round_names[uid]=name;self.counts[LETTERS.index(choice[0])]+=1
+            self.votes[uid]=choice[0];self.round_names[uid]=name;self.audience.add('vote',uid,name,round=self.round,choice=choice[0]);self.counts[LETTERS.index(choice[0])]+=1
             phrases=[f'{spoken_name(name)}, você tem certeza que é a {choice[0]}? Vamos conferir no final!',f'{spoken_name(name)} marcou {choice[0]}! Será que vem mais um acerto?',f'Anotei sua resposta, {spoken_name(name)}: letra {choice[0]}!']
             self.speak('vote',phrases[(self.round+len(self.votes)-2)%3],uid=uid,round=self.round,priority=2,cooldown=12)
             if choice[0]==LETTERS[self.q['key']]:
@@ -180,6 +187,7 @@ class Engine:
             elif gift and gift==self.settings['hintId'] and active and not self.hint:
                 self.hint=True;self.notify(f'💡 {name} liberou a dica coletiva!','gift')
             else:self.notify(f'✨ Obrigado pelo presente, {name}!','gift')
+            self.audience.add('gift',uid,name)
             self.speak('gift',f'{spoken_name(name)}, obrigado pelo presente! Você animou a arena!',uid=uid,priority=3,cooldown=15)
         elif t in ('follow','like','share'):
             cd=f'{t}:{uid}'
@@ -190,6 +198,7 @@ class Engine:
                       'like':f'{spoken_name(name)}, obrigado pela curtida! Bora para o próximo desafio!',
                       'share':f'{spoken_name(name)}, obrigado por compartilhar a live!'}
             labels={'follow':f'⭐ {name}, obrigado por seguir!','like':f'♥ {name}, obrigado pela curtida!','share':f'↗ {name}, obrigado por compartilhar!'}
+            self.audience.add(t,uid,name)
             self.notify(labels[t]);self.speak(t,messages[t],uid=uid,priority=3 if t=='follow' else 1,cooldown=30)
         while len(self.cooldowns)>4096:self.cooldowns.popitem(last=False)
     def snapshot(self):
@@ -203,4 +212,4 @@ class Engine:
         counts=self.counts.copy()
         active_state=self.frozen if self.state=="paused" else self.state
         total=self.settings["interval"] if active_state=="reveal" else 2 if active_state=="interval" else 5 if self.phase=="memorize" else getattr(self,"round_duration",self.settings["duration"])+self.extra
-        return dict(revision=self.revision,state=self.state,phase=self.phase,round=self.round,q=q,remaining=self.remaining if self.state=='paused' else max(0,self.deadline-now) if self.state in ('running','reveal','interval') else 0,total=total,votes=counts,count=len(self.votes),rank=self.ranked(),speech=self.interactions.snapshot(),rewards=list(self.rewards),settings=self.settings,alert=self.alert,logs=list(self.logs),mode=self.mode,connection=self.connection,eventAge=now-self.last_event if self.last_event else None)
+        return dict(version=VERSION,audience=self.audience.snapshot(),revision=self.revision,state=self.state,phase=self.phase,round=self.round,q=q,remaining=self.remaining if self.state=='paused' else max(0,self.deadline-now) if self.state in ('running','reveal','interval') else 0,total=total,votes=counts,count=len(self.votes),rank=self.ranked(),speech=self.interactions.snapshot(),rewards=list(self.rewards),settings=self.settings,alert=self.alert,logs=list(self.logs),mode=self.mode,connection=self.connection,eventAge=now-self.last_event if self.last_event else None)

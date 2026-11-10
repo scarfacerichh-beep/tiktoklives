@@ -1,3 +1,5 @@
+> Relatório histórico de uma edição anterior. Os pacotes nativos estão suspensos após alerta de antivírus. Para iniciar a edição atual, use [COMECE_4.4.md](COMECE_4.4.md).
+
 # INTERALIVES QI ARENA STUDIO 4.3 — Festa colorida
 
 09/11/2026. Evolução da arena existente para acrescentar cor e convites automáticos à interação, preservando perguntas, TikFinity, voz local, acertos, baús e controles.

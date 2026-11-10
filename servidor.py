@@ -2,8 +2,10 @@
 from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse,unquote
-import os,json,time,threading,argparse,webbrowser,sys
+import os,json,time,threading,argparse,webbrowser,sys,uuid,hashlib,http.client
 from engine import Engine
+from build_info import VERSION,UI_SCHEMA,APP_ID
+from natural_voice import NaturalVoice,VoiceUnavailable,VoiceBusy
 ROOT=Path(__file__).resolve().parent
 os.chdir(ROOT)
 engine=Engine(storage=ROOT/'session.json')
@@ -12,6 +14,10 @@ lease_owner=""
 lease_until=0
 voice_owner=""
 voice_until=0
+voice_online=False
+instance_id=uuid.uuid4().hex
+install_id=hashlib.sha256(str(ROOT).encode()).hexdigest()[:20]
+natural_voice=NaturalVoice()
 class Handler(SimpleHTTPRequestHandler):
     protocol_version='HTTP/1.1'
     def log_message(self,*args):pass
@@ -21,6 +27,8 @@ class Handler(SimpleHTTPRequestHandler):
         raw=json.dumps(data,ensure_ascii=False).encode();self.send_response(status);self.send_header('Content-Type','application/json; charset=utf-8');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
     def do_GET(self):
         path=unquote(urlparse(self.path).path)
+        if path=='/api/health':
+            return self.json_response(200,dict(app=APP_ID,version=VERSION,uiSchema=UI_SCHEMA,instance=instance_id,installId=install_id,folder=ROOT.name,port=self.server.server_port,autoSelectedPort=getattr(self.server,'auto_selected',False),naturalVoiceInstalled=natural_voice.available()))
         if path=='/api/state':
             with engine.lock:return self.json_response(200,engine.snapshot())
         if path=='/api/events':
@@ -44,9 +52,24 @@ class Handler(SimpleHTTPRequestHandler):
             super().do_GET()
         else:self.send_error(404)
     def do_POST(self):
-        global lease_owner,lease_until,voice_owner,voice_until
+        global lease_owner,lease_until,voice_owner,voice_until,voice_online
         origin=self.headers.get('Origin')
         if origin and origin!=f'http://{self.headers.get("Host")}':return self.json_response(403,{'error':'Origem não permitida'})
+        if urlparse(self.path).path=='/api/tts':
+            try:
+                size=int(self.headers.get('Content-Length','0'))
+                if not 0<size<=2000:raise ValueError()
+                data=json.loads(self.rfile.read(size))
+                with engine.lock:
+                    authorized=(data.get('owner')==voice_owner and time.monotonic()<voice_until and voice_online and data.get('consent') is True and engine.settings['voiceEngine']=='neural')
+                if not authorized:return self.json_response(403,{'error':'Ative a voz online nesta aba e autorize o envio das falas antes de usar.'})
+                audio=natural_voice.synthesize(data['text'],data.get('voice','pt-BR-FranciscaNeural'),data.get('rate',.94))
+                self.send_response(200);self.send_header('Content-Type','audio/mpeg');self.send_header('Content-Length',str(len(audio)));self.end_headers();self.wfile.write(audio)
+                return
+            except VoiceBusy:return self.json_response(429,{'error':'Outra fala está sendo preparada.'})
+            except VoiceUnavailable as e:return self.json_response(503,{'error':str(e)})
+            except (ValueError,KeyError,TypeError):return self.json_response(400,{'error':'Solicitação de voz inválida'})
+            except (BrokenPipeError,ConnectionResetError):return
         if urlparse(self.path).path=='/api/video':
             try:
                 size=int(self.headers.get('Content-Length','0'))
@@ -69,9 +92,9 @@ class Handler(SimpleHTTPRequestHandler):
                 if not 0<size<300:raise ValueError()
                 data=json.loads(self.rfile.read(size));owner=str(data['owner'])[:60]
                 with engine.lock:
-                    if data.get('release') and voice_owner==owner:voice_owner='';voice_until=0
+                    if data.get('release') and voice_owner==owner:voice_owner='';voice_until=0;voice_online=False
                     acquired=not data.get('release') and (voice_owner==owner or time.monotonic()>voice_until)
-                    if acquired:voice_owner=owner;voice_until=time.monotonic()+25
+                    if acquired:voice_owner=owner;voice_until=time.monotonic()+25;voice_online=data.get('online') is True
                 return self.json_response(200,{'acquired':acquired})
             except (ValueError,KeyError,TypeError):return self.json_response(400,{'error':'Identificador inválido'})
         if urlparse(self.path).path=='/api/lease':
@@ -89,7 +112,9 @@ class Handler(SimpleHTTPRequestHandler):
             size=int(self.headers.get('Content-Length','0'))
             if not 0<size<=150000:raise ValueError('Payload inválido')
             payload=json.loads(self.rfile.read(size))
-            with engine.lock:engine.command(payload['action'],payload.get('data'));snap={'ok':True} if payload['action'] in ('event','events') else engine.snapshot()
+            with engine.lock:engine.command(payload['action'],payload.get('data'));
+            if payload['action']=='reset':natural_voice.clear()
+            with engine.lock:snap={'ok':True} if payload['action'] in ('event','events') else engine.snapshot()
             if payload['action'] not in ('event','events'):
                 with condition:condition.notify_all()
             self.json_response(200,snap)
@@ -102,11 +127,33 @@ def ticker():
         if changed:
             with condition:condition.notify_all()
         time.sleep(.1)
+def probe_existing(port):
+    try:
+        connection=http.client.HTTPConnection('127.0.0.1',port,timeout=.6);connection.request('GET','/api/health');response=connection.getresponse();raw=response.read(8192);connection.close()
+        if response.status==200:
+            info=json.loads(raw)
+            return info.get('app')==APP_ID and info.get('version')==VERSION and info.get('installId')==install_id
+    except (OSError,ValueError,http.client.HTTPException):pass
+    return False
+
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');args=parser.parse_args()
-    try:server=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
-    except OSError as e:print(f'Não foi possível iniciar na porta {args.port}: {e}. Feche outra instância ou use --port 8789.');return 1
-    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{args.port}/';print('INTERALIVES QI ARENA STUDIO 4.3.1\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
+    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');parser.add_argument('--auto-port',action='store_true');args=parser.parse_args()
+    if not 0<=args.port<=65535:print('Porta inválida.');return 1
+    candidates=range(args.port,min(args.port+20,65536)) if args.auto_port and args.port else [args.port]
+    server=None
+    for port in candidates:
+        try:server=ThreadingHTTPServer(('127.0.0.1',port),Handler);break
+        except OSError as e:
+            if args.auto_port and probe_existing(port):
+                url=f'http://127.0.0.1:{port}/';print(f'A arena {VERSION} desta pasta já está aberta: '+url,flush=True)
+                if args.open:webbrowser.open(url)
+                return 0
+            if not args.auto_port:print(f'Não foi possível iniciar na porta {port}: {e}. Feche a instância anterior ou use --auto-port.');return 1
+    if server is None:print('Não foi possível encontrar uma porta disponível.');return 1
+    server.auto_selected=server.server_port!=args.port
+    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{server.server_port}/'
+    print(f'INTERALIVES QI ARENA STUDIO {VERSION}\nPasta: {ROOT}\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
+    if server.auto_selected:print('A porta anterior estava ocupada. Atualize a fonte do OBS/Studio com o endereço deste visor.',flush=True)
     if args.open:webbrowser.open(url)
     try:server.serve_forever()
     except KeyboardInterrupt:server.server_close()

@@ -2,13 +2,26 @@
 >
 > O código-fonte permanece disponível para revisão. A causa da detecção ainda não foi determinada.
 
-[Edição em código-fonte, sem binários Windows compilados](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_4.3.1_CODIGO.zip) — requer Python instalado separadamente. Não houve certificação antivírus dessa edição neste ambiente.
+[Edição em código-fonte, sem binários Windows compilados](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/downloads/INTERALIVES_QI_4.4_CODIGO.zip) — requer Python instalado separadamente. Não houve certificação antivírus dessa edição neste ambiente.
 
-# INTERALIVES QI ARENA STUDIO 4.3.1
+# INTERALIVES QI ARENA STUDIO 4.4.0
 
 Jogo local para TikTok LIVE: perguntas, memória, ranking por conta e poderes coletivos opcionais. QI é uma marca de desafio recreativo, sem avaliação clínica e sem prêmios financeiros. Participação e ranking gratuitos.
 
-[Veja a prévia em vídeo](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/docs/ARENA_4.3_PREVIA.mp4) · [Veja a captura Full HD](https://github.com/scarfacerichh-beep/tiktoklives/blob/main/docs/ARENA_4.3.png)
+[Veja a prévia em vídeo](https://github.com/scarfacerichh-beep/tiktoklives/raw/refs/heads/main/docs/ARENA_4.4_PREVIA.mp4) · [Veja a captura Full HD](https://github.com/scarfacerichh-beep/tiktoklives/blob/main/docs/ARENA_4.4.png)
+
+## Novidades 4.4: visitantes e voz suave
+
+- Mascote animado que flutua, pisca e reage a votos, curtidas, seguidores e comentários recebidos.
+- Faixa pessoal com nome do visitante e iniciais na alternativa escolhida. Funciona mesmo com a voz desligada; não inventa espectadores.
+- Alternativas com mais cor, paletas por rodada, ticker e movimento ambiente preservados. Modos suave/desligado e redução de movimento respeitados.
+- Voz local mais lenta por padrão e opção natural **Francisca/Antônio**. [Ouça a amostra real](docs/VOZ_NATURAL_AMOSTRA.mp3).
+- Selo **V4.4** no visor, checagem de arquivos/servidor e endereço atual para copiar ao OBS.
+- O inicializador usa outra porta se a anterior estiver ocupada por uma versão diferente, sem encerrar programas. **Atualize a fonte do OBS com o endereço mostrado neste painel.**
+
+Extraia em **uma pasta nova**, instale Python 3.11+ pelo site oficial e execute `INICIAR_INTERALIVES_QI.bat`. Para voz natural, execute primeiro `INSTALAR_VOZ_NATURAL.bat`, uma única vez; esse passo baixa dependências abertas para `.venv`, separadamente do ZIP. Não há executável compilado nem Python embutido nesta distribuição. Não restaure a edição bloqueada pelo antivírus.
+
+Veja [instruções de atualização](docs/COMECE_4.4.md) e [validação e limites](docs/RELATORIO_4.4.md).
 
 ## Novidades 4.3: mensagens rolando e mais cor
 
@@ -37,7 +50,7 @@ O fundo usa gradientes e transformações, sem grandes desfoques em movimento. U
 3. No OBS ou TikTok Studio, inclua o **áudio do navegador do painel** ou a captura do áudio do sistema. A voz não sai automaticamente da fonte de navegador do visor. Evite capturar o mesmo áudio por duas fontes.
 4. Selecione TikFinity real e teste uma curtida, seguir e responder D. As falas agradecem por nome e confirmam a letra sem informar se está certa antes da revelação. Comentários livres recebem boas-vindas, sem ler o texto do espectador em voz alta.
 
-**Somente vozes locais em português são usadas.** Se não houver voz compatível, o painel informa o impedimento. O teste automatizado usa uma API de fala simulada; reprodução audível da voz instalada no seu Windows e captura no OBS/Studio ainda precisam ser verificadas no seu PC. Não há voz natural de IA em nuvem, chave, assinatura ou áudio humano pré-gravado.
+**Voz local:** usa somente vozes pt-BR instaladas, sem fallback remoto. **Voz natural online opcional:** execute `INSTALAR_VOZ_NATURAL.bat`, reinicie o servidor, selecione Natural online e Francisca, autorize o envio das falas/apelidos e clique em Ativar. A autorização não é salva entre recargas. Usa edge-tts 7.3.1 e o serviço online da Microsoft, sem chave ou assinatura; precisa de internet e não tem garantia de disponibilidade. Ao falhar, informa o problema e permite escolher local manualmente. A geração da amostra foi real; as vozes locais do Windows e a captura de áudio no OBS ainda precisam ser verificadas no seu PC.
 
 A fila aceita até quatro falas aguardando. Falas têm validade de 12 segundos; confirmações de votação vencem ao mudar de rodada. Curtidas e seguidores têm cooldown; em avalanche, parte das falas é descartada para não atrasar o jogo. As contagens e os acertos continuam sendo processados. Uma concessão no servidor impede dois painéis de narrarem ao mesmo tempo, renovada antes de cada fala; feche/silencie o painel anterior ou aguarde até 25 segundos após uma interrupção. Reconexão do servidor pede reativação manual da voz.
 
@@ -47,7 +60,7 @@ A narração de rodadas e revelações pode ser desligada separadamente. Com cha
 
 **Baús misteriosos visuais:** a cada 5 acertos acumulados na sessão, a pessoa recebe uma conquista gratuita — aura neon, estrela, selo ou confetes. O baú é anunciado ao revelar a resposta. O nome da conquista aparece no aviso; participantes no Top 3 também ganham o tratamento visual correspondente no cartão. Não há presentes TikTok enviados, dinheiro, prêmio físico ou valor real. A opção pode ser desligada. Sob grande volume, as filas de anúncios têm limite, mas o contador de conquistas permanece no ranking. Com a persistência ativa, acertos e conquistas recebidas são guardados.
 
-## Windows: edição em código-fonte 4.3.1
+## Windows: edição em código-fonte 4.4
 
 Os pacotes com inicializador `.exe` estão suspensos após um alerta de antivírus. A causa não foi determinada. Consulte [o aviso de distribuição](docs/AVISO_DISTRIBUICAO.md). Não restaure o arquivo bloqueado nem desative proteções.
 
@@ -145,4 +158,4 @@ Evidências em `evidence/`. A homologação em Windows, OBS/TikTok Studio e LIVE
 
 `engine.py`: estados, relógio, votos e persistência. `questions.py`: 122 questões em cinco categorias. `servidor.py`: HTTP/SSE e inicialização. `static/app.js`: apresentação e painel. `static/tikfinity.js`: adaptador WebSocket. `mock_tikfinity.py`: simulador. `launcher.c`: inicializador Windows.
 
-Python oficial embutido: licença no pacote original de runtime, retirado da distribuição atual. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP e está publicado em https://github.com/scarfacerichh-beep/tiktoklives . O ZIP da pasta downloads inclui o runtime Windows.
+Python oficial embutido: licença no pacote original de runtime, retirado da distribuição atual. Inter: SIL Open Font License em `static/fonts/LICENSE.txt`. Ferramentas de compilação e desenvolvimento não são necessárias para rodar. O projeto foi recebido por ZIP e está publicado em https://github.com/scarfacerichh-beep/tiktoklives . O ZIP 4.4 da pasta downloads não inclui runtime Windows; usa Python instalado separadamente.

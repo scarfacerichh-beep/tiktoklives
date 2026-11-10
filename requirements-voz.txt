@@ -1,0 +1,2 @@
+# Opcional. O jogo e a voz local não precisam desta dependência.
+edge-tts==7.3.1

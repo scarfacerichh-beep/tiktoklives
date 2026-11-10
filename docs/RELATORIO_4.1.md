@@ -1,3 +1,5 @@
+> Relatório histórico de uma edição anterior. Os pacotes nativos estão suspensos após alerta de antivírus. Para iniciar a edição atual, use [COMECE_4.4.md](COMECE_4.4.md).
+
 # INTERALIVES QI ARENA STUDIO 4.1.0 — Voz e conquistas
 
 09/11/2026. Atualização solicitada após uso na LIVE, para agradecer por nome, responder ao chat e valorizar o ranking. O usuário escolheu expressamente recompensas visuais, não presentes reais.
