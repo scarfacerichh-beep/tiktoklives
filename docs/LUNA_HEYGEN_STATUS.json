@@ -1,0 +1,16 @@
+{
+  "provider": "HeyGen",
+  "avatarLookId": "ea3e909b108c16db35603c97444a20c0",
+  "avatarName": "Luna — Cartas ao Vivo",
+  "avatarStatus": "completed",
+  "voiceId": "e808da2329754929803c8bd98dc36857",
+  "voiceName": "Lucilene - Clear & Trustworthy",
+  "voiceLocale": "pt-BR",
+  "videoId": "283fc70ca8150cf024ed92725bdb94e6",
+  "videoStatus": "failed",
+  "failureCode": "INVALID_PARAMETER",
+  "failureMessage": "VideoTTS does not support the requested locale 'pt-BR'.",
+  "requestedResolution": "1080p",
+  "planResolution": "720p",
+  "retrySubmitted": false
+}

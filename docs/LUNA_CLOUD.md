@@ -8,7 +8,7 @@ O Site publicado continua sendo a versão 0.2. **Não foi substituído por uma i
 
 ## Preparado neste trabalho
 
-- Descoberto o plugin HeyGen, capaz de gerar vídeo falante a partir da imagem aprovada. Conexão solicitada; não confirmada. Ainda não há render de avatar, conta/API conectada ou sessão em tempo real iniciada.
+- HeyGen conectado. O avatar de foto **Luna — Cartas ao Vivo** foi criado e ficou pronto, preservando a imagem aprovada. A primeira geração de vídeo falhou: `VideoTTS does not support the requested locale pt-BR`. Não existe vídeo renderizado desta tentativa e não houve repetição automática. A API/conta de LiveAvatar em tempo real continua sem configuração.
 - `cloud/broker.mjs`: módulo de backend para tokens de avatar LiveAvatar e de eventos TikTools. Não é frontend, não está publicado nem conectado à versão 0.2. Chaves mestras nunca são devolvidas ao navegador.
 - Nenhum endpoint funciona sem a função de autorização do futuro painel. Origem de requisições, consentimento, canal permitido e limite de corpo são verificados; erros não expõem respostas/segredos do fornecedor. Flags de ativação começam desligadas.
 - Avatar: criação de token LITE com avatar explicitamente configurado, sandbox como padrão e sessão inicial limitada a 60 segundos. **Isso não cria o avatar da Luna, sintetiza voz nem inicia vídeo por si só.** Ainda faltam provisionamento do avatar, transporte de áudio/LiveKit e integração completa do player.

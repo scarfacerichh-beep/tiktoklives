@@ -1,0 +1,28 @@
+{
+  "status": "aguardando novo pedido após falha",
+  "correction": "Remover locale pt-BR: heygen_voice oferece português com locale nulo. A voz selecionada é pt-BR. Usar 720p, limite retornado para o plano Free.",
+  "request": {
+    "avatarId": "ea3e909b108c16db35603c97444a20c0",
+    "aspectRatio": "9:16",
+    "resolution": "720p",
+    "outputFormat": "mp4",
+    "engine": {
+      "type": "avatar_iv"
+    },
+    "voiceId": "e808da2329754929803c8bd98dc36857",
+    "voiceSettings": {
+      "speed": 0.92,
+      "volume": 1,
+      "engine_settings": {
+        "engine_type": "heygen_voice",
+        "model": "heygen-voice-1"
+      }
+    },
+    "script": "Olá, eu sou a Luna. Que bom ter você aqui! Respire com calma e pense em uma pergunta. Agora escolha a carta um, dois ou três e escreva sua escolha no chat. Vamos descobrir uma mensagem simbólica para refletir juntos. Seja bem-vindo à nossa roda de cartas.",
+    "motionPrompt": "Acolhedora e serena, olhando para a câmera, com sincronização labial natural, piscadas, movimentos sutis de cabeça e ombros e um gesto discreto de boas-vindas. Câmera fixa, sem cortes ou música, preservando identidade, figurino, mesa e cartas.",
+    "motionExpressiveness": "default",
+    "fit": "cover",
+    "removeBackground": false,
+    "title": "Luna — primeira fala e movimentos"
+  }
+}
