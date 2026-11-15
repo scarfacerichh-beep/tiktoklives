@@ -1,12 +1,12 @@
-# Luna — Estúdio online 0.3
+# Luna — Estúdio cloud 0.4
 
-**[ABRIR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site)** — clique em **Ouvir a Luna**.
+**[CONFIGURAR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site/#cloudSetup)** · canal **@interalivess**.
 
-A abertura aprovada agora é um vídeo HeyGen com voz, expressões e gestos, hospedado na própria página. 720×1280, 18,64 segundos, com a marca do plano gratuito. A interface ativa dispensa vozes do Windows, Python/BAT e TikFinity localhost.
+O painel tem cofre no servidor, importação da Luna, catálogo de avatares/vozes e teste em tempo real limitado a 60 segundos. A apresentação gravada permanece disponível. Dispensa servidor e TikFinity local.
 
-O player oferece pausa, reinício, volume, silêncio e modo apresentação. As três cartas continuam com mensagens em texto. **É uma abertura gravada; agradecimentos por nome e a LIVE em tempo real ainda não estão ativados.** Veja [a entrega, validação e limites](docs/LUNA_0.3.md).
+**Faltam as contas e credenciais LiveAvatar/TikTools, que o usuário ainda não possui.** Cadastre-as pelos links do painel e salve as chaves somente no formulário privado. A conexão real e uma LIVE contínua ainda precisam ser validadas; nenhum plano foi comprado nem sessão real ativada. Veja [instruções e testes](docs/LUNA_0.4.md).
 
-As seções seguintes são o histórico das versões anteriores.
+As seções seguintes registram versões anteriores.
 
 ---
 

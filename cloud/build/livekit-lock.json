@@ -1,0 +1,6 @@
+{
+  "version": "2.24.1",
+  "source": "https://registry.npmjs.org/livekit-client/-/livekit-client-2.24.1.tgz",
+  "sha256": "5527d144aeca06079576f0c0fd6e72d23752f424708023afd87a1d78837a46d9",
+  "file": "package/dist/livekit-client.umd.js"
+}

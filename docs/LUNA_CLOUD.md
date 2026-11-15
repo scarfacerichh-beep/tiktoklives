@@ -1,3 +1,5 @@
+> **Atualização 0.4:** o backend e o cofre agora estão publicados. Contas/credenciais dos provedores ainda faltam. Consulte [LUNA_0.4.md](LUNA_0.4.md); o texto abaixo registra as etapas anteriores.
+
 # Luna — migração para apresentadora e painel em nuvem
 
 ## Pedido e estado real
