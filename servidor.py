@@ -137,7 +137,7 @@ def probe_existing(port):
     return False
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');parser.add_argument('--auto-port',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--open',action='store_true');parser.add_argument('--auto-port',action='store_true');parser.add_argument('--view',choices=('arena','luna'),default='arena');args=parser.parse_args();view_path='static/luna/index.html' if args.view=='luna' else ''
     if not 0<=args.port<=65535:print('Porta inválida.');return 1
     candidates=range(args.port,min(args.port+20,65536)) if args.auto_port and args.port else [args.port]
     server=None
@@ -145,13 +145,13 @@ def main():
         try:server=ThreadingHTTPServer(('127.0.0.1',port),Handler);break
         except OSError as e:
             if args.auto_port and probe_existing(port):
-                url=f'http://127.0.0.1:{port}/';print(f'A arena {VERSION} desta pasta já está aberta: '+url,flush=True)
+                url=f'http://127.0.0.1:{port}/'+view_path;print(f'A arena {VERSION} desta pasta já está aberta: '+url,flush=True)
                 if args.open:webbrowser.open(url)
                 return 0
             if not args.auto_port:print(f'Não foi possível iniciar na porta {port}: {e}. Feche a instância anterior ou use --auto-port.');return 1
     if server is None:print('Não foi possível encontrar uma porta disponível.');return 1
     server.auto_selected=server.server_port!=args.port
-    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{server.server_port}/'
+    threading.Thread(target=ticker,daemon=True).start();url=f'http://127.0.0.1:{server.server_port}/'+view_path
     print(f'INTERALIVES QI ARENA STUDIO {VERSION}\nPasta: {ROOT}\nPainel: '+url+'\nVisor: '+url+'?live=1',flush=True)
     if server.auto_selected:print('A porta anterior estava ocupada. Atualize a fonte do OBS/Studio com o endereço deste visor.',flush=True)
     if args.open:webbrowser.open(url)

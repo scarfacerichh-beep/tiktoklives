@@ -1,3 +1,13 @@
+# Luna — Cartas ao Vivo · animações 0.1
+
+A personagem Luna ganhou uma cena vertical animada: cartas em 3D, luz de velas, partículas e efeitos de curtida/seguidor/presente com nomes. **Esta é uma prévia de animação sem TikFinity conectado e sem voz/sincronização labial.**
+
+[Ver a prévia em vídeo](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/docs/LUNA_ANIMACOES_0.1.mp4) · [Baixar para testar](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/downloads/LUNA_ANIMACOES_0.1.zip) · [Como abrir e limites](docs/LUNA_ANIMACOES.md)
+
+Extraia em pasta nova e execute **INICIAR_LUNA.bat**, com Python 3.11+ instalado oficialmente. No estúdio, clique em **Demonstrar sequência**. O jogo anterior permanece disponível abaixo; a nova cena fica em `/static/luna/index.html`.
+
+---
+
 > **DISTRIBUIÇÃO WINDOWS COM EXECUTÁVEL SUSPENSA.** Foi reportado bloqueio “Vírus detectado” no ZIP 4.3. Não restaure nem permita o arquivo bloqueado. Os ZIPs com o inicializador compilado foram retirados da distribuição atual enquanto o alerta é investigado. Integridade SHA-256 e testes funcionais não equivalem a uma análise antivírus.
 >
 > O código-fonte permanece disponível para revisão. A causa da detecção ainda não foi determinada.
