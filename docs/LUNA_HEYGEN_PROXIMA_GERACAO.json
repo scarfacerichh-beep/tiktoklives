@@ -1,5 +1,5 @@
 {
-  "status": "aguardando novo pedido após falha",
+  "status": "executada após aprovação explícita; concluída e publicada",
   "correction": "Remover locale pt-BR: heygen_voice oferece português com locale nulo. A voz selecionada é pt-BR. Usar 720p, limite retornado para o plano Free.",
   "request": {
     "avatarId": "ea3e909b108c16db35603c97444a20c0",
@@ -24,5 +24,6 @@
     "fit": "cover",
     "removeBackground": false,
     "title": "Luna — primeira fala e movimentos"
-  }
+  },
+  "executedVideoId": "dd02e81ad51cf9cb3b10f6e0bc108790"
 }

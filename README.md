@@ -1,12 +1,12 @@
-# Luna — Cartas ao Vivo · voz e interações 0.2
+# Luna — Estúdio online 0.3
 
-A Luna agora tem voz pelo navegador, agradecimentos por nome e conexão opcional ao TikFinity. Entrada, curtida, seguidor e presente recebem frases e reações; as cartas podem ser narradas. A amostra natural é pré-gerada e as falas personalizadas usam a voz selecionada no navegador. **Não há sincronização labial.** Veja [configuração, testes e limites](docs/LUNA_0.2.md).
+**[ABRIR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site)** — clique em **Ouvir a Luna**.
 
-**[ABRIR LUNA NO NAVEGADOR](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site)** — página hospedada pelo Sites, sem download ou instalação. O acesso é privado para a conta proprietária. Clique em **Demonstrar sequência** para testar.
+A abertura aprovada agora é um vídeo HeyGen com voz, expressões e gestos, hospedado na própria página. 720×1280, 18,64 segundos, com a marca do plano gratuito. A interface ativa dispensa vozes do Windows, Python/BAT e TikFinity localhost.
 
-[Ver a prévia em vídeo](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/docs/LUNA_ANIMACOES_0.1.mp4) · [Detalhes e limites](docs/LUNA_ANIMACOES.md)
+O player oferece pausa, reinício, volume, silêncio e modo apresentação. As três cartas continuam com mensagens em texto. **É uma abertura gravada; agradecimentos por nome e a LIVE em tempo real ainda não estão ativados.** Veja [a entrega, validação e limites](docs/LUNA_0.3.md).
 
-Após um bloqueio de antivírus reportado no ZIP da Luna, essa distribuição foi suspensa. A alternativa é um único HTML, sem ZIP, BAT ou instalador: salve **LUNA_ABRIR_NO_NAVEGADOR.html** e abra no navegador. No estúdio, clique em **Demonstrar sequência**. Não houve certificação antivírus; não restaure arquivos bloqueados. O jogo anterior permanece disponível abaixo; a nova cena fica em `/static/luna/index.html`.
+As seções seguintes são o histórico das versões anteriores.
 
 ---
 

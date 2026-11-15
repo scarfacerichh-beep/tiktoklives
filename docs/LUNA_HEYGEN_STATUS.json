@@ -12,5 +12,24 @@
   "failureMessage": "VideoTTS does not support the requested locale 'pt-BR'.",
   "requestedResolution": "1080p",
   "planResolution": "720p",
-  "retrySubmitted": false
+  "retrySubmitted": false,
+  "approvedRetry": {
+    "videoId": "dd02e81ad51cf9cb3b10f6e0bc108790",
+    "status": "completed",
+    "resolution": "720p",
+    "localeOverride": null,
+    "durationSeconds": 18.64,
+    "width": 720,
+    "height": 1280,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "bytes": 7200664,
+    "sha256": "827b179badc53f57d2451dd699f7f96611d344db72a7f0620664d22e5ed5e68e",
+    "publishedAsset": "luna-opening.mp4"
+  },
+  "latestVideoId": "dd02e81ad51cf9cb3b10f6e0bc108790",
+  "latestVideoStatus": "completed",
+  "siteVersion": "0.3",
+  "siteURL": "https://luna-cartas-interalives.velvetydogwood32.chatgpt.site",
+  "deploymentStatus": "succeeded"
 }

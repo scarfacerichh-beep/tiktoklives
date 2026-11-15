@@ -4,11 +4,11 @@
 
 A exigência agora é vídeo de personagem com voz, sincronização labial e movimentos faciais/corporais. Não basta transformar a fotografia por CSS. Voz e processamento não devem depender das vozes do Windows, de Python/BAT nem de TikFinity em localhost.
 
-O Site publicado continua sendo a versão 0.2. **Não foi substituído por uma integração em nuvem incompleta.** A versão 0.2 não atende ao novo aceite de avatar animado; sua voz depende do navegador e sua ponte usa TikFinity local.
+O Site recebeu a apresentação gravada 0.3, com vídeo HeyGen e áudio incorporado. A página ativa não depende mais de voz do navegador ou TikFinity local. Agradecimentos dinâmicos por nome e eventos da LIVE na nuvem continuam pendentes; veja LUNA_0.3.md.
 
 ## Preparado neste trabalho
 
-- HeyGen conectado. O avatar de foto **Luna — Cartas ao Vivo** foi criado e ficou pronto, preservando a imagem aprovada. A primeira geração de vídeo falhou: `VideoTTS does not support the requested locale pt-BR`. Não existe vídeo renderizado desta tentativa e não houve repetição automática. A API/conta de LiveAvatar em tempo real continua sem configuração.
+- HeyGen conectado. O avatar de foto **Luna — Cartas ao Vivo** foi criado e ficou pronto, preservando a imagem aprovada. A primeira geração de vídeo falhou: `VideoTTS does not support the requested locale pt-BR`. Após nova aprovação do usuário foi gerada outra tentativa, concluída: `dd02e81ad51cf9cb3b10f6e0bc108790`, sem override de locale. O vídeo foi incorporado ao Site 0.3. A API/conta de LiveAvatar em tempo real continua sem configuração.
 - `cloud/broker.mjs`: módulo de backend para tokens de avatar LiveAvatar e de eventos TikTools. Não é frontend, não está publicado nem conectado à versão 0.2. Chaves mestras nunca são devolvidas ao navegador.
 - Nenhum endpoint funciona sem a função de autorização do futuro painel. Origem de requisições, consentimento, canal permitido e limite de corpo são verificados; erros não expõem respostas/segredos do fornecedor. Flags de ativação começam desligadas.
 - Avatar: criação de token LITE com avatar explicitamente configurado, sandbox como padrão e sessão inicial limitada a 60 segundos. **Isso não cria o avatar da Luna, sintetiza voz nem inicia vídeo por si só.** Ainda faltam provisionamento do avatar, transporte de áudio/LiveKit e integração completa do player.
