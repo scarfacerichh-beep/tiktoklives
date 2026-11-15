@@ -1,3 +1,9 @@
+# Luna — Leituras do chat 0.5
+
+**[ABRIR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site/#readingPanel)** · @interalivess.
+
+Fila individual, três cartas animadas e sequência de falas por nome integradas ao fluxo cloud. Há prévia identificada sem voz. **A LIVE real ainda depende das contas e chaves LiveAvatar/TikTools ausentes; o teste conectado dura até 60 segundos.** Veja [limites e validação](docs/LUNA_0.5.md).
+
 # Luna — Estúdio cloud 0.4
 
 **[CONFIGURAR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site/#cloudSetup)** · canal **@interalivess**.
