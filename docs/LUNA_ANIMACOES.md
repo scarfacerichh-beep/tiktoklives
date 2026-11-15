@@ -1,3 +1,9 @@
+> **Atualização de distribuição:** o ZIP Luna 0.1 foi bloqueado pelo antivírus do usuário e retirado da distribuição atual. A causa permanece desconhecida. Não restaure arquivos bloqueados nem desative proteções. O histórico Git conserva a versão antiga, sem atestar sua segurança.
+>
+> A alternativa atual é `downloads/LUNA_ABRIR_NO_NAVEGADOR.html`: arquivo HTML com JavaScript, CSS, imagem e fonte incorporados. Salve com extensão `.html`, abra no navegador e clique em Demonstrar sequência. Não requer Python, BAT ou instalação. Se também for bloqueado, mantenha o bloqueio e informe o nome da ameaça. Não foi realizada varredura antivírus.
+>
+> Teste automatizado: conteúdo do HTML carregado em Chromium sem internet; imagem, fonte, cartas, presentes, seguidor e pausa funcionaram sem solicitações HTTP nem erros JS. A política do navegador gerenciado impediu navegação direta file:// neste ambiente; a abertura por duplo clique em Windows permanece sem validação. A sincronização entre abas de arquivos locais depende do navegador; use os controles da própria tela.
+
 # Luna — animações 0.1
 
 Primeira cena animada baseada na personagem aprovada. A imagem original foi preservada; movimentos de câmera/escala, luz e efeitos são feitos pelo navegador. Não é vídeo de uma pessoa real respirando/falando, nem contém sincronização labial.
