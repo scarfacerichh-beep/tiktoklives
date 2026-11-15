@@ -1,3 +1,11 @@
+## Acesso atual — página hospedada
+
+Abra https://luna-cartas-interalives.velvetydogwood32.chatgpt.site e clique em **Demonstrar sequência**. Não é necessário baixar o HTML, ZIP, Python ou BAT. Site privado para a conta proprietária; use a mesma conta do ChatGPT, se solicitado. A publicação foi confirmada pelo serviço Sites. Esta é a cena de animação; não adiciona conexão TikFinity, voz ou sincronização labial.
+
+O endereço raw.githubusercontent.com é distribuição de arquivos/código, não hospedagem de páginas. Ele não deve ser usado como o link principal para abrir a Luna.
+
+---
+
 > **Atualização de distribuição:** o ZIP Luna 0.1 foi bloqueado pelo antivírus do usuário e retirado da distribuição atual. A causa permanece desconhecida. Não restaure arquivos bloqueados nem desative proteções. O histórico Git conserva a versão antiga, sem atestar sua segurança.
 >
 > A alternativa atual é `downloads/LUNA_ABRIR_NO_NAVEGADOR.html`: arquivo HTML com JavaScript, CSS, imagem e fonte incorporados. Salve com extensão `.html`, abra no navegador e clique em Demonstrar sequência. Não requer Python, BAT ou instalação. Se também for bloqueado, mantenha o bloqueio e informe o nome da ameaça. Não foi realizada varredura antivírus.

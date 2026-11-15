@@ -2,7 +2,9 @@
 
 A personagem Luna ganhou uma cena vertical animada: cartas em 3D, luz de velas, partículas e efeitos de curtida/seguidor/presente com nomes. **Esta é uma prévia de animação sem TikFinity conectado e sem voz/sincronização labial.**
 
-[Ver a prévia em vídeo](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/docs/LUNA_ANIMACOES_0.1.mp4) · [Baixar para testar](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/downloads/LUNA_ABRIR_NO_NAVEGADOR.html) · [Como abrir e limites](docs/LUNA_ANIMACOES.md)
+**[ABRIR LUNA NO NAVEGADOR](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site)** — página hospedada pelo Sites, sem download ou instalação. O acesso é privado para a conta proprietária. Clique em **Demonstrar sequência** para testar.
+
+[Ver a prévia em vídeo](https://raw.githubusercontent.com/scarfacerichh-beep/tiktoklives/main/docs/LUNA_ANIMACOES_0.1.mp4) · [Detalhes e limites](docs/LUNA_ANIMACOES.md)
 
 Após um bloqueio de antivírus reportado no ZIP da Luna, essa distribuição foi suspensa. A alternativa é um único HTML, sem ZIP, BAT ou instalador: salve **LUNA_ABRIR_NO_NAVEGADOR.html** e abra no navegador. No estúdio, clique em **Demonstrar sequência**. Não houve certificação antivírus; não restaure arquivos bloqueados. O jogo anterior permanece disponível abaixo; a nova cena fica em `/static/luna/index.html`.
 
