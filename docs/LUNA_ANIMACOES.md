@@ -1,3 +1,5 @@
+> **Atualização 0.2:** voz e ponte TikFinity foram adicionadas. Consulte [LUNA_0.2.md](LUNA_0.2.md). As instruções e limites abaixo descrevem a primeira prévia 0.1.
+
 ## Acesso atual — página hospedada
 
 Abra https://luna-cartas-interalives.velvetydogwood32.chatgpt.site e clique em **Demonstrar sequência**. Não é necessário baixar o HTML, ZIP, Python ou BAT. Site privado para a conta proprietária; use a mesma conta do ChatGPT, se solicitado. A publicação foi confirmada pelo serviço Sites. Esta é a cena de animação; não adiciona conexão TikFinity, voz ou sincronização labial.

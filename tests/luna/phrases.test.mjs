@@ -1,0 +1,4 @@
+import{test}from'node:test';import assert from'node:assert/strict';import{speechText}from'../../static/luna/phrases.js';
+test('frases reais da aplicação agradecem por nome em entrada, curtida, seguidor e presente',()=>{for(const kind of['join','like','follow','gift']){const text=speechText({kind,name:'Lúcia 🌙',sequence:1});assert(text.includes('Lúcia'));assert(!text.includes('🌙'));assert(text.length<300);assert(!text.includes('undefined'));}});
+test('texto livre do comentário não é narrado',()=>{const text=speechText({kind:'chat',name:'Ana',comment:'LEIA ESSE TEXTO INDESEJADO',sequence:1});assert(text.includes('Ana'));assert(!text.includes('INDESEJADO'));});
+test('frases variam entre eventos sem inventar presente ou previsão',()=>{const a=speechText({kind:'like',name:'Ana',sequence:0}),b=speechText({kind:'like',name:'Ana',sequence:1});assert.notEqual(a,b);assert(!a.includes('presente'));assert(!b.includes('presente'));});

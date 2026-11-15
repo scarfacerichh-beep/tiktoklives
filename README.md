@@ -1,6 +1,6 @@
-# Luna — Cartas ao Vivo · animações 0.1
+# Luna — Cartas ao Vivo · voz e interações 0.2
 
-A personagem Luna ganhou uma cena vertical animada: cartas em 3D, luz de velas, partículas e efeitos de curtida/seguidor/presente com nomes. **Esta é uma prévia de animação sem TikFinity conectado e sem voz/sincronização labial.**
+A Luna agora tem voz pelo navegador, agradecimentos por nome e conexão opcional ao TikFinity. Entrada, curtida, seguidor e presente recebem frases e reações; as cartas podem ser narradas. A amostra natural é pré-gerada e as falas personalizadas usam a voz selecionada no navegador. **Não há sincronização labial.** Veja [configuração, testes e limites](docs/LUNA_0.2.md).
 
 **[ABRIR LUNA NO NAVEGADOR](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site)** — página hospedada pelo Sites, sem download ou instalação. O acesso é privado para a conta proprietária. Clique em **Demonstrar sequência** para testar.
 
