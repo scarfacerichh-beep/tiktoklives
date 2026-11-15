@@ -1,3 +1,7 @@
+# Luna 0.6 — avatar ao vivo
+
+[ABRIR PAINEL](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site/) · abertura gravada removida; regras configuráveis de perguntas por presente. Regra desativada até definir presentes/quantidades. Faltam credenciais dos provedores; teste cloud limitado a 60 segundos. [Limites e testes](docs/LUNA_0.6.md).
+
 # Luna — Leituras do chat 0.5
 
 **[ABRIR LUNA](https://luna-cartas-interalives.velvetydogwood32.chatgpt.site/#readingPanel)** · @interalivess.

@@ -12,7 +12,7 @@ for f in (root/'static/luna-online').iterdir():
  if f.name=='index.html':data=data.replace(b'luna-poster.png',b'luna-poster.jpg')
  if f.name=='studio.css':data=data.replace(b"url('../fonts/InterVariable.woff2')",b"url('fonts/InterVariable.woff2')")
  assets['/'+f.name]={'type':mime,'data':base64.b64encode(data).decode()}
-for name,p,mime in [('luna-reference.jpg','/workspace/work/luna-heygen-production/luna-reference-1080.jpg','image/jpeg'),('luna-opening.mp4','/workspace/work/luna-heygen-production/luna-opening-web.mp4','video/mp4'),('luna-poster.jpg','/workspace/work/luna-heygen-production/luna-poster-web.jpg','image/jpeg'),('fonts/InterVariable.woff2',str(root/'static/fonts/InterVariable.woff2'),'font/woff2')]:assets['/'+name]={'type':mime,'data':base64.b64encode(Path(p).read_bytes()).decode()}
+for name,p,mime in [('luna-reference.jpg','/workspace/work/luna-heygen-production/luna-reference-1080.jpg','image/jpeg'),('luna-poster.jpg','/workspace/work/luna-heygen-production/luna-poster-web.jpg','image/jpeg'),('fonts/InterVariable.woff2',str(root/'static/fonts/InterVariable.woff2'),'font/woff2')]:assets['/'+name]={'type':mime,'data':base64.b64encode(Path(p).read_bytes()).decode()}
 vault=(root/'cloud/runtime/vault.mjs').read_text().replace('export ','')
 api=(root/'cloud/runtime/api.mjs').read_text();api=api[api.index('\n')+1:].replace('export ','')
 worker='const ASSETS='+json.dumps(assets,separators=(',',':'))+';\nconst CACHE=new Map();\n'+vault+'\n'+api+'''
